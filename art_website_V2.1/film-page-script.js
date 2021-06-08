@@ -3,17 +3,32 @@ const film_page_projector_img = document.getElementById("film-page-projector-img
 const film_page_video_container = document.getElementById("film-page-video-container");
 const film_page_nav_left = document.getElementById("film-page-nav-left");
 const film_page_nav_right = document.getElementById("film-page-nav-right");
+const DVD_list = document.getElementById("DVD-list");
+const DVD_info_container = document.getElementById("DVD-info-container");
+const film_page_back_button = document.getElementById("film-page-back-btn");
 var transitionEnd = transitionEndEventName();
+var current_films = [];
+
+//Event Listeners
+film_page_back_button.addEventListener("click", () => filmToMenu());
 
 // I took it out cause now Im testing it on the music page
  // ONLY FOR TESTING THAT WHEN I CLICK THE VIDEO APPEARS NICELY
 /* const dummy_link = document.getElementById("dummy-link-for-test");
 dummy_link.addEventListener("click",startCinemaVideo);  */
 
-
-
-function startCinemaVideo() {
-    expandScreen();
+function filmToMenu() {
+    // Forcing the same effect as if we stopped hovering over the menu "film"
+    // link so the video and the visuals of the menu are resetted. However, 
+    // I need to find out why this is needed.This function is deined in menu-page-script.js
+    ChangeMenuVideo(0, false);
+    // Removing the DVD-list menu and moving to menu page. 
+    film_page_nav_left.classList.remove("show");
+    film_page_nav_right.classList.remove("show");
+    document.body.style.transition = "transform 3s ease";
+    document.body.style.transform = "translate(0,0)";
+    header.style.transition = "transform 3s ease"
+    header.style.transform = "translate(0,0)";
 }
 
 function hideFilmMenu(){
@@ -27,28 +42,66 @@ function showFilmMenu(){
 }
 
 function expandScreen() {
+    console.log('entre a expandScren');
     hideFilmMenu();
     //since both sides of the nav do the same transition, just cheking one side is enough
-    film_page_nav_left.addEventListener(transitionEnd, function _listener() {
-        film_page_nav_left.removeEventListener(transitionEnd, _listener);
+    film_page_nav_left.addEventListener('transitionend', function _listener_1() {
 
         film_page_projector_img.classList.toggle("hidden");
         film_page_cinema_img.classList.toggle("hidden");
         film_page_video_container.style.height = "49%";
-        film_page_video_container.addEventListener(transitionEnd, function _listener() {
-            removeEventListener(transitionEnd, _listener);
-            playVideo();
-      });
-      });
+        film_page_video_container.addEventListener('transitionend', function _listener_2() {
 
-      
+            // The screen will retract when clicking outside of it. I put it here
+            // so the click is only accepted after the screen has been
+            // totally expanded. 
+            const controller = new AbortController();
+            document.body.addEventListener("click", function _listener_3(e) {
+                console.log("Hide Screen Listener");
+                if ((e.target !== film_page_video_container) && (film_page_video_container.innerHTML !== '')) {
+                    //Okay... remember to always add the Element when doing removeEventListener. 
+                    // Also, there is an option in addEventListeners to run it only once.
+                    // In addition, besides the removeEventListener method, ther is also a controller.abort() method,
+                    // remember all this!
+                    hideScreen();
+                    document.body.removeEventListener("click", _listener_3);
+                    film_page_video_container.innerHTML = '';
+
+                }
+            }, ); 
+
+      }, { once: true });
+      }, { once: true }); 
 }
 
-function playVideo() {
+function hideScreen() {
+    console.log('entre a HideScren');
+    film_page_projector_img.classList.toggle("hidden");
+    film_page_cinema_img.classList.toggle("hidden");
+    film_page_video_container.style.height = "0%"; 
+    showFilmMenu();
+}
+
+async function playVideo(link) {
+    
+    //Expanding screen
+    expandScreen();
+
+    // Using youtube API for finding out info about the video for fetching the embed video url.
+    // Should add some feedback to the user if the request fails.
+    console.log(link);
+    const res = await fetch(`https://www.youtube.com/oembed?url=${link}&format=json`);
+    body = await res.json();
+
+    // Using regex for fetching the url from the embeded object response.
+    const urlRegex = /(https?:\/\/[^ ]*)/;
+    var embed_link = body.html.match(urlRegex)[1];
+
+    // Starting video
     const output =`
-    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/kDlEvaKBkhU?autoplay=1" allow="autoplay" frameborder="0"></iframe>
+    <iframe width="100%" height="100%" src="${embed_link}" allow="autoplay" frameborder="0"></iframe>
   `;
-  film_page_video_container.innerHTML = output;
+    film_page_video_container.innerHTML = output;
 }
 
 
@@ -77,3 +130,61 @@ function transitionEndEventName () {
 }
 
 //YOUTUBE VIDEOS NEED TO BE IN /EMBED/ OPTION IN THE URL FOR THEM TO WORK IN WEBSITES OTHER THAN YOUTUBE.
+async function populateFilmMenu(page_number) {
+    const res = await fetch('http://localhost:3000/api/films', {
+        method: 'GET',
+        headers: {
+            'page-number': page_number
+        }
+    });
+    body = await res.json();
+    // This will the json boydo of the answer, with an array of 6 films and the total number of films.  
+
+    // Now this needs to populate the menu.
+    // ALSO: CAREFUL TO NOT USE SAME ID FOR MORE THAN ONE ELEMENT. You made the mistake of 
+    // calling all the trailer link elements with same id, that can be dangerous and give problems to the browser too.
+    //DVD_list.innerHTML = ''; 
+    //saving this in global variable current_films so the info about the current films displayed in meny
+    // is available after this function has finished (particularly because the eventlistener
+    // will need it)
+
+    current_films = body.films;
+
+    // Reset of the DVD list, so the list gets populated from scratch.
+    DVD_list.innerHTML = '';
+    current_films.forEach((item, index) => {
+        DVD_list.innerHTML += `<li class="DVD-item">
+                                  <div class="DVD-img">
+                                    <img src="${item.imglink}" alt="">
+                                  </div>
+                                  <div class="DVD-info">
+                                    <img src="./img/film-page/action.png" id="trailer-link-${index}" alt="">
+                                  </div>
+                               </li>`
+    });
+
+    // Adding the click addEventListeners so the info of the DVD appears when clicking on the image 
+    Array.prototype.slice.call(DVD_list.children).forEach((item, index) => item.firstElementChild.addEventListener("click", () => {
+        document.getElementById('title').innerHTML = `${current_films[index].title}`;
+        document.getElementById('director').innerHTML = `${current_films[index].director}`;
+        document.getElementById('country-year').innerHTML = `${current_films[index].country}, ${current_films[index].year}`;
+        document.getElementById('info').innerHTML = `${current_films[index].info}`;
+        // Modificar esto para que solo desaparezca clicando la misma. Si clicas otra imagen, no. 
+        // Ya que lo único que tiene que pasar es que se cambie la información. 
+        DVD_info_container.classList.toggle('hidden');
+    })); 
+
+    // Get all elements whose id start with "trailer-link" and add event listeners.
+    document.querySelectorAll('[id^="trailer-link"]').forEach((item, index) => item.addEventListener("click", () => {
+        playVideo(current_films[index].trailer);
+    })); 
+
+    //Lastly, outside of this function, event listeners will be added to each populated image so when you click on it, the 
+    // info is displayed on the left. 
+    // ¿WHERE SHOULD I PUT THE EVENT LISTENERS? BECAUSE I AM POPULATING HERE... INVESTIGATE. WHEN YOU FINISH THAT, 
+    // MOST THINGS WILL BE DONE!! I GUESS THE EVENT SHOULD BE AS A ARRAY EVENT LISTENER ON TOP OF THIS PAGE, 
+    // THEN, THIS FUNCTION SHOULD PUPULATE THEM AND SET THEM TO DISPLAY TRUE, I GUESS WHILE THEY ARE IN DISPLAY OFF THE 
+    // CLICK WILL NOT WORK. OR REMEMBER HOW TO DEACTIVATE CLICKS SSO THIS FUNCTION WILL ACTIVATE THE CLICK ONLY 
+    // AFTER POPULATING IT. ALSO, MAKE THE IMAGES SMALLER AND ADD LEFT AND RIGHT ARROW LIKE IN THE BOOK EXAMPLE. 
+    // AND THE LEFT AND RIGHT ARROW SHOULD APPEAR ONLY WHEN NECESSARY. NO LEFT ARROW FOR PAGE 0. AH... SO MANY THINGS TO DO. 
+}

@@ -5,7 +5,6 @@ const music_page_nav_left = document.getElementById("music-page-nav-left");
 const music_page_nav_right = document.getElementById("music-page-nav-right");
 const music_page_content = document.getElementById("music-page-content");
 const ghost_elements = document.querySelectorAll(".music-page .ghost-element");
-console.log(ghost_elements.length);
 var music_page_player = document.getElementById("music-page-player");
 var transitionEnd = transitionEndEventName();
 

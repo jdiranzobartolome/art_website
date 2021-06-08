@@ -249,7 +249,21 @@
             <div class="video-container" id="film-page-video-container"></div> 
 
             <nav class="DVD-nav show">
-                <div class="left-side" id="film-page-nav-left"></div>
+                <div class="left-side" id="film-page-nav-left">
+                    <div class="DVD-info-container hidden" id="DVD-info-container">
+                        <div class="container">
+                            <div class="title-director">
+                                <h1 id="title"></h1>
+                                <h2 id="director"></h2>
+                                <h3 id="country-year"></h3>
+                            </div>
+                            <div class="info">
+                                <h2>Info</h2>
+                                <p id="info"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="right-side" id="film-page-nav-right">
 
@@ -258,61 +272,8 @@
                     <img src="./img/film-page/lupa.png" alt="" class="DVD-search">
                     </div>
                     
-                    <ul class="DVD-list">
-                        <li class="DVD-item">
-                            <div class="DVD-img">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/Gold_rush_poster.jpg" alt="">
-                            </div>
-                            <div class="DVD-info">
-                                <img src="./img/film-page/action.png" id="" alt="">
-                                <img src="./img/film-page/lupa.png" alt="">
-                            </div>
-                        </li>
-                        <li class="DVD-item">
-                            <div class="DVD-img">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/Gold_rush_poster.jpg" alt="">
-                            </div>
-                            <div class="DVD-info">
-                                <img src="./img/film-page/action.png" alt="">
-                                <img src="./img/film-page/lupa.png" alt="">
-                            </div>
-                        </li>
-                        <li class="DVD-item">
-                            <div class="DVD-img">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/Gold_rush_poster.jpg" alt="">
-                            </div>
-                            <div class="DVD-info">
-                                <img src="./img/film-page/action.png" alt="">
-                                <img src="./img/film-page/lupa.png" alt="">
-                            </div>
-                        </li>
-                        <li class="DVD-item">
-                            <div class="DVD-img">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/Gold_rush_poster.jpg" alt="">
-                            </div>
-                            <div class="DVD-info">
-                                <img src="./img/film-page/action.png" alt="">
-                                <img src="./img/film-page/lupa.png" alt="">
-                            </div>
-                        </li>
-                        <li class="DVD-item">
-                            <div class="DVD-img">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/Gold_rush_poster.jpg" alt="">
-                            </div>
-                            <div class="DVD-info">
-                                <img src="./img/film-page/action.png" alt="">
-                                <img src="./img/film-page/lupa.png" alt="">
-                            </div>
-                        </li>
-                        <li class="DVD-item">
-                            <div class="DVD-img">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/Gold_rush_poster.jpg" alt="">
-                            </div>
-                            <div class="DVD-info">
-                                <img src="./img/film-page/action.png" alt="">
-                                <img src="./img/film-page/lupa.png" alt="">
-                            </div>
-                        </li>
+                    <ul class="DVD-list" id="DVD-list">
+                        <!-- This innerHTML will be populated through Javascript with the DVDs comming from the database -->
                     </ul>
                 </div>
             </nav>
@@ -435,6 +396,7 @@
                 <div class="ghost-element"></div>
                 <div class="ghost-element"></div>
             </div>
+
             <img src="./img/music-page/tv.jpg" alt="" class="TV-img hidden" id="music-page-tv-img">
             <div class="video-container" id="music-page-video-container">
                 <img src="./img/music-page/film-grainy-texture.png" alt="" class="TV-filter-img"></img>
@@ -443,8 +405,7 @@
 
             <nav class="CD-nav show">
                 <div class="left-side" id="music-page-nav-left">
-
-                    
+                    <div class="CD-info-container"></div>
                 </div>
 
                 <div class="right-side" id="music-page-nav-right">

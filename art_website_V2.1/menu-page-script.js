@@ -151,6 +151,7 @@ function ChangeMenuVideo_listener(e) {
 
 // Moving from main-page to any one of the other pages.
 function changeMenuPage(index) {
+    // Moving to film page. 
     if (index == 0) {
         menu_page_links[index].removeEventListener("mouseout", ChangeMenuVideo_listener);
         document.body.style.transition = "transform 3s ease";
@@ -158,6 +159,9 @@ function changeMenuPage(index) {
         header.style.transition = "transform 3s ease"
         header.style.transform = "translate(-100vw,0)";
         /* variables defined in film-page-script.js */
+
+        // Populate the film menu with the initial 6 films from menu-page 1. This function is defined in film-page-script.js
+        populateFilmMenu(0);
         
         // PASARLO A USAR TRANISITION EVENT LISTENER PARA QUE SE AÑADA LA CALSE SHOW CUANDO
         //HAYA ACABADO LA TRANSICION DEL BODY. 
@@ -172,7 +176,8 @@ function changeMenuPage(index) {
             document.body.style.transition = "transform 0.01s ease";
             header.style.transition = "transform 0.1s ease";
         }, 2000);
-
+    
+    // Moving to book page. 
     } else if (index == 1) {
         menu_page_links[index].removeEventListener("mouseout", ChangeMenuVideo_listener);
         document.body.style.transition = "transform 3s ease"
@@ -186,7 +191,7 @@ function changeMenuPage(index) {
             header.style.transition = "transform 0.1s ease";
         }, 2000);
 
-
+    // Moving to music page. 
     } else if (index === 2) {
         // Remove event listener mouseout so while the transition is being performed the video of the menu-page
         // does not change because of the mouseout event.

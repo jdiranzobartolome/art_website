@@ -161,12 +161,25 @@ router.put('/:film_id',[auth, [
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // @route    GET api/films
-// @desc     Get all films
+// @desc     Get films and send a subset of six, depending on the number of menu page the client is at, the pages will start founting from 0.
+//           It also sends the total number of films that are in the database. 
 // @access   Public
 router.get('/', async (req, res) => {
     try {
-        const films = await Film.find().sort({ date: -1 });
-        res.json(films);
+        const number_films = await Film.countDocuments();
+        const films_to_skip = req.header('page-number')*6
+        console.log(req.header('page-number'));
+        films = [];
+        if (number_films > 6) {
+            films = await Film.find().sort({ date: -1 }).skip(films_to_skip).limit(6);
+        } else {
+            films = await Film.find().sort({ date: -1 });
+        }
+        res.json({
+            'films': films,
+            'total-films': number_films
+        });
+
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');
