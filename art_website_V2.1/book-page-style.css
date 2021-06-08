@@ -1,0 +1,120 @@
+/* book-page  CSS rules */
+.book-page {
+  position: absolute;
+  top: -100vh;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+}
+
+.book-page .book-page-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.book-page .main {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  padding: 50px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  /* align-items stretch make items occupy whole perperdicular direction.
+  Since we are in flex: row, then this makes items occupy the whole width of parent */
+  align-items: stretch;
+}
+
+.book-page .left {
+  /* the 100% is the othe attribute htat makes children occupy the 100% of the height of its space */
+  flex: 1;
+  padding: 20px;
+}
+
+.book-page .bookshelf {
+  flex: 1;
+  position: relative;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.book-page .main .overlayer {
+  position: absolute;
+  top: 60px;
+  left: 0;
+  width: 100%;
+  height: 500px;
+  opacity: 0.7;
+}
+
+.book-page .main .overlayer img {
+  width: 100%;
+  height: 100%;
+  border-radius: 30px;
+}
+
+.book-page .controls {
+  position: absolute;
+  top: 510px;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  opacity: 1;
+  background-color: #111;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.book-page .controls .arrow-left {
+  padding-right: 20px;
+  height: 40px;
+  transform: scaleX(-1);
+}
+
+.book-page .controls .arrow-right {
+  height: 40px;
+  padding-left: 20px;
+}
+
+.book-page .shelf {
+  /* defining the width and height overrides the flex:1, so now the flex item from the right
+  will ocupy more space than the left as the screen becomes smaller. It is okay, though, 
+  since it is what we want */
+  width: 426px;
+  height: 440px;
+  background: url(./img/book-page/bookshelf.gif);
+  background-size: contain;
+  z-index: 1;
+}
+
+.book-page .book-page-content video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.65;
+  transform: scaleX(-1);
+
+  /* For making backgorund video black and white
+  filter: grayscale(100%); 
+  -webkit-filter: grayscale(100%); 
+  -moz-filter: grayscale(100%);
+  -ms-filter: grayscale(100%);
+  -o-filter: grayscale(100%); 
+  filter: url(resources.svg#desaturate); 
+  filter: gray; 
+  -webkit-filter: grayscale(1);   
+  */
+}

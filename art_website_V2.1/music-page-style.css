@@ -1,0 +1,335 @@
+.music-page {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.music-page .music-page-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+}
+
+.film-page .film-page-back-btn {
+  position: absolute;
+  z-index: 100;
+  right: 25px;
+  top: 20px;
+  width: 35px;
+  height: 35px;
+  border-radius: 15px;
+  cursor: pointer;
+  background: radial-gradient(
+    circle,
+    #fff 0%,
+    #ccc 50%,
+    rgba(0, 0, 0, 0.8) 100%
+  );
+  /* NOTA!! RECUERDO PROBAR OTRO TIPO DE TRANSICIONES PARA LAS 
+  TRANSICIONES DE LA PAGINA! */
+  z-index: 9999;
+}
+
+.music-page .music-page-back-btn {
+  position: absolute;
+  z-index: 100;
+  left: 25px;
+  bottom: 38px;
+  width: 45px;
+  height: 45px;
+  border-radius: 15px;
+  cursor: pointer;
+  background: radial-gradient(
+    circle,
+    #fff 0%,
+    #ccc 50%,
+    rgba(0, 0, 0, 0.8) 100%
+  );
+  /* NOTA!! RECUERDO PROBAR OTRO TIPO DE TRANSICIONES PARA LAS 
+  TRANSICIONES DE LA PAGINA! */
+  z-index: 9999;
+}
+
+.music-page .music-page-back-btn .btn-line {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 3px;
+  background: #000;
+  transition: all 0.5s ease-out;
+}
+
+.music-page .music-page-back-btn .btn-line:first-of-type {
+  /* In transforms, the order of the operations is really important!!
+  the operations start being performed from the right!!
+  Aunque he de admitir que no sé porque esto funciona así,
+  yo creo que para funcionar tendría que estar al reves */
+  transform: translate(-55%, 105%) rotate(30deg);
+}
+
+.music-page .music-page-back-btn .btn-line:last-of-type {
+  /* In transforms, the order of the operations is really important!!
+  the operations start being performed from the right!!
+  Aunque he de admitir que no sé porque esto funciona así,
+  yo creo que para funcionar tendría que estar al reves */
+  transform: translate(-55%, -185%) rotate(-30deg);
+}
+
+.music-page img.piano-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 4s ease;
+}
+
+/*
+.music-page img.music-score-img {
+  position: absolute;
+  top: 60%;
+  left: -10%;
+  z-index: 1000;
+  width: 50%;
+  height: 30%;
+  color: #fff;
+}
+*/
+
+/* This are the properties needed for the image to always fit exactly in the screen,
+so defining the video container with percentages will always make it fall in the same place
+with respect to the image. 
+
+Do three things: "1) fitting the video container for when the screen is quite vertical
+"2)fitting it for when the screen is quite horizontal
+"3) Using this object-fill case for when the screen is more or less square. 
+Use media queries for all that!!!
+.music-page img.TV-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  transition: opacity 4s ease;
+} */
+
+.music-page img.TV-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 4s ease;
+}
+
+.music-page .video-container {
+  position: absolute;
+  top: 21%;
+  left: 19.5%;
+  width: 49%;
+  height: 58%;
+  border-radius: 15px;
+  background: #fff;
+  z-index: 100;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  /* when the youtube video starts, pointer-events will be allowed again for the screen on javascript */
+  pointer-events: none;
+  overflow: hidden;
+
+  /* add maybe a movie white with old style lines effect later */
+}
+
+.music-page .video-container img.TV-filter-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0.3;
+  filter: brightness(70%);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.music-page .hidden {
+  opacity: 0 !important;
+}
+
+.music-page .CD-nav {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  opacity: 1;
+  visibility: hidden;
+}
+
+.music-page .CD-nav.show {
+  visibility: visible;
+}
+
+.music-page .CD-nav .left-side,
+.music-page .CD-nav .right-side {
+  /* you can create two easy columns with float: left and 
+    50% of width and setting height for both children of a parent */
+  float: left;
+  width: 50%;
+  height: 100vh;
+}
+
+.music-page .CD-nav .right-side {
+  background: rgba(0, 0, 0, 0.7);
+  /*background-color: rgba(5, 0, 73, 0.9);*/
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 2fr;
+  grid-column-gap: 20px;
+  align-items: stretch;
+  justify-content: stretch;
+  /* Translate is really useful for making objets look like
+    their are comming form somewhere. With translate3D, you kind
+    of play with their original (html) cordinate position */
+  transform: translate(0, -100%);
+  /* OJO!!! en transition you need to write tranform. The property is 
+    transform. Trnaslate is one of the variables of the property */
+  transition: transform 3s ease;
+}
+
+.music-page .CD-nav .right-side.show {
+  transform: translate(0, 0);
+}
+
+.music-page .CD-nav .left-side {
+  background: rgba(255, 255, 255, 0.3);
+  /*background-color: rgba(5, 0, 73, 0.2); */
+  transform: translate(0, 100%);
+  transition: transform 3s ease;
+}
+
+.music-page .CD-nav .left-side.show {
+  transform: translate(0, 0);
+}
+
+.music-page .CD-nav .CD-list-header {
+  position: relative;
+  padding: 15px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.music-page .CD-nav .CD-list-header h3 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 60px;
+  text-align: center;
+  justify-content: center;
+  color: #fff;
+}
+
+.music-page .CD-nav .CD-list-header img {
+  position: absolute;
+  top: 50%;
+  right: 10%;
+  transform: translate(0, -50%);
+  width: 40px;
+  height: 40px;
+}
+
+.music-page .CD-nav .CD-list-header {
+  flex-grow: 2;
+}
+
+.music-page .CD-nav .CD-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  justify-items: stretch;
+  align-items: stretch;
+}
+
+.music-page .CD-nav .CD-list .CD-item {
+  overflow: hidden;
+}
+
+.music-page .CD-nav .CD-img,
+.music-page .CD-nav .CD-info {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+}
+
+.music-page .CD-nav .CD-img img {
+  width: 130px;
+  height: 130px;
+}
+
+.music-page .CD-nav .CD-info img {
+  width: 35px;
+  height: 35px;
+  padding: 5px;
+  cursor: pointer;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.6);
+  border-top: 2px solid rgba(255, 255, 255, 0.6);
+}
+
+.music-page .CD-nav .CD-info img:first-of-type {
+  padding-right: 1px;
+}
+
+.music-page .CD-nav .CD-info img:last-of-type {
+  padding-left: 1px;
+}
+
+/* ghost music-score image CSS*/
+.music-page .ghost-img-container {
+  position: absolute;
+  top: 40%;
+  left: 5%;
+  width: 600px;
+  height: 300px;
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: repeat(60, 1fr);
+}
+
+.music-page .ghost-element {
+  background: url("/img/music-page/music-score.png");
+  background-size: 600px 300px;
+  opacity: 0;
+  filter: blur(10px);
+  transform: rotate(90deg);
+}
+
+.music-page .ghost-element.show {
+  opacity: 1;
+  filter: blur(0);
+  transform: rotate(0);
+  /* IMPORTANT! ALWAYS INDICATE ALL TRANSITIONS IN THE SAME TRANSITION PROPERTY, OTHERWISE THEY DO NOT 
+   WORK WELL, PARTICULARLY WHEN USING THE TRANSITION END EVENT!! */
+  transition: opacity 0.1s ease, filter 1s ease, transform 0.5s ease;
+}
+
+.music-page .ghost-element.disintegrate {
+  opacity: 0;
+  filter: blur(10px);
+  transform: rotate(90deg);
+  transition: opacity 0.07s ease, filter 0.03s ease, transform 0.03s ease;
+}

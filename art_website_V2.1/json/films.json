@@ -1,0 +1,10 @@
+{
+    "films": [
+        {
+            "title":"The Gold Rush",
+            "image":"https://upload.wikimedia.org/wikipedia/commons/4/4d/Gold_rush_poster.jpg",
+            "info":"The Gold Rush is a 1925 American comedy film written, produced, and directed by Charlie Chaplin.",
+            "trailer":"kDlEvaKBkhU"
+        }
+    ]
+}

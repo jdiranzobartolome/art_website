@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- VITAL VITAL VITAL VITAL VITAL!!!!! 
+    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    EN EL META CON NOMBRE VIEWPORT, SE PUEDEN CAMBIAR VARIAS PROPIEDADES (O AÑADIR), HAY UNA QUE ES MINIMUM-SCALE, QUE 
+    ES MUY IMPORTANTE AÑADIRAL Y PONERLA A 1 PARA QUE EN LOS MOVILES NO SE PUEDA HACER UN UNZOOM DESDE EL PRINCIPIO Y QUE POR LO TANTO
+    SE PUEDE VER LA PARTE DE PAGINA RESDERIZADA FUERA DEL VIEWPORT!!!!! VITAL!-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 minimum-scale=1.0">
+    <link rel="stylesheet" href="main-style.css">
+    <link rel="stylesheet" href="menu-page-style.css">
+    <link rel="stylesheet" href="book-page-style.css">
+    <link rel="stylesheet" href="film-page-style.css">
+    <link rel="stylesheet" href="music-page-style.css">
+    <title>Baúl de Arte</title>
+</head>
+
+<body>
+<!-- Header -->
+    <header id="header">
+        <div class="logo">
+            <h2 class="logo-1">Baúl</h2>
+            <h3 class="logo-2">del</h3>
+            <h2 class="logo-3">Arte</h2>
+        </div>
+    </header>
+    <!-- Password popup when trying to submit a form. It needs the id of the form, so with JS that form attribute need to be change to the corresponding ID (film, book or music)-->
+    <div class="password-popup" id="password-popup">
+        <small>Error message</small>
+        <div class="close-btn" id="password-popup-close-btn">
+            <div class="btn-line"></div>
+            <div class="btn-line"></div>
+        </div>
+        <div>
+            <div class="form-control">
+                <label form = "film-form" for="password">Password</label>
+                <input form = "film-form" type="password" id="password" placeholder="Enter password">
+            </div>
+            <button form = "film-form" type="submit">Send</button>
+        </div>
+    </div>
+
+
+
+<!-- Menu Page -->
+    <section class="menu-page">
+        <div class="menu-page-content">
+            <div class="content">
+                <video src="./video/menu-page/menu-video.webm" muted loop autoplay id="menu-page-video"></video>
+                <div class="menu-page-overlay" id="menu-page-overlay"></div>
+                <ul>
+                    <li>
+                        <a href="#" id="film-video" >Films</a>
+                    </li>
+                    <li>
+                        <a href="#" id="book-video">Books</a>
+                    </li>
+                    <li>
+                        <a href="#" id="music-video">Music</a>
+                    </li>
+                </ul>            
+            </div>
+            
+            <div class="art-form-btn" id="art-form-btn">
+                <div class="btn-line"></div>
+                <div class="btn-line"></div>
+            </div>
+        <!-- forms for adding artworks -->
+            <div class="art-form-wrapper" id="art-form-wrapper">
+                <div class="art-form-header">
+                    <img src="pattern-1.png" alt="" class="background-pattern">
+                    <div class="art-form-header-text">
+                       <h2>Baúl del Arte</h2>
+                       <h3>Add an Artwork</h3>
+                    </div>
+                </div>
+                <div class="art-form-content-wrapper">
+                    <div class="art-form-content-container">
+                        <ul class="art-form-selector" id="art-form-selector">
+                            <li class="pressed">Film</li>
+                            <li>Book</li>
+                            <li>Music</li>
+                        </ul>
+
+                        <!-- film form -->
+                        <form action="" id="film-form" class="form show"> 
+                            <div class="form-control">
+                                <label for="film-title">Title</label>
+                                <input type="text" id="film-title" placeholder="Enter film title">
+                                <small>Error message</small>
+                            </div>
+                            <div class="form-control">
+                                <label for="film-director">Director</label>
+                                <input type="text" id="film-director" placeholder="Enter the name of the director">
+                                <small>Error message</small>
+                            </div>
+                            <div class="form-control">
+                                <label for="film-country">Country</label>
+                                <input type="text" id="film-country" placeholder="Enter the country of the director">
+                                <small>Error message</small>
+                            </div>
+                            <div class="form-control">
+                                <label for="film-year">Year</label>
+                                <input type="text" id="film-year" placeholder="Enter the year of the film">
+                                <small>Error message</small>
+                            </div>
+                            <div class="form-control">
+                                <label for="film-info">Info</label>
+                                <textarea id="film-info" class="text-area" name="film-info" rows="4" cols="31">Input info here.</textarea>
+                                <small>Error message</small>
+                            </div>
+                            <div class="form-control">
+                                <label for="film-tags">Tags (separated by ";")</label>
+                                <input type="text" id="film-tags" placeholder="Enter tags, separated by ';'">
+                                <small>Error message</small>
+                             </div>
+                             <div class="form-control">
+                                <label for="film-trailer">Video link of the trailer (youtube)</label>
+                                <input type="text" id="film-trailer" placeholder="Enter youtube link of the trailer">
+                                <small>Error message</small>
+                             </div>
+                            <div class="form-control">
+                                <div class="film-link-add-btn" id="film-link-add-btn">
+                                    <div class="btn-line"></div>
+                                    <div class="btn-line"></div>
+                                </div>
+                                <label for="film-link-1">Video links of scenes (youtube)</label>
+                                <input type="text" id="film-link-1" placeholder="Enter youtube link.">
+                                <small>Error message</small>
+                            </div>
+                            <div class="form-control">
+                             <label for="film-img-link">Link to image of the cover</label>
+                             <input type="text" id="film-img-link" placeholder="Enter link ending in an img extension.">
+                             <small>Error message</small>
+                          </div>
+                            <button type ="button" class = "password-popup-btn">Submit</button>
+                         </form>
+
+                          <!-- book form -->
+                          <form action="" id="book-form" class="form"> 
+                            <div class="form-control">
+                                <label for="book-title">Title</label>
+                                <input type="text" id="book-title" placeholder="Enter book title">
+                                <small>Error message</small>
+                            </div>
+                            <div class="form-control">
+                                <label for="book-author">Author</label>
+                                <input type="text" id="book-author" placeholder="Enter the name of the author">
+                                <small>Error message</small>
+                            </div>
+                            <div class="form-control">
+                                <label for="book-country">Country</label>
+                                <input type="text" id="book-country" placeholder="Enter the country of the author">
+                                <small>Error message</small>
+                            </div>
+                            <div class="form-control">
+                                <label for="book-year">Year</label>
+                                <input type="text" id="book-year" placeholder="Enter the year of the book">
+                                <small>Error message</small>
+                            </div>
+                            <div class="form-control">
+                                <label for="book-info">Info</label>
+                                <textarea id="book-info" class="text-area" name="book-info" rows="4" cols="31">Input info here.</textarea>
+                                <small>Error message</small>
+                            </div>
+                            <div class="form-control">
+                                <label for="book-tags">Tags (separated by ";")</label>
+                                <input type="text" id="book-tags" placeholder="Enter tags, separated by ';'">
+                                <small>Error message</small>
+                            </div>
+                            <div class="form-control">
+                                <div class="book-link-add-btn" id="book-link-add-btn">
+                                   <div class="btn-line"></div>
+                                   <div class="btn-line"></div>
+                                </div>
+                                <label for="book-quote-1">Quote</label>
+                                <textarea id="book-quote-1" class="text-area" name="book-quote-1" rows="4" cols="31">Input info here.</textarea>
+                                <small>Error message</small>
+                            </div>
+                            <div class="form-control">
+                             <label for="book-img-link">Link to image of the cover</label>
+                             <input type="text" id="book-img-link" placeholder="Enter link ending in an img extension.">
+                             <small>Error message</small>
+                            </div>
+                            <button type ="button" class = "password-popup-btn">Submit</button>
+                         </form>
+
+                        <!-- music form -->
+                        <form action="" id="music-form" class="form"> 
+                           <div class="form-control">
+                               <label for="music-artist">Artist</label>
+                               <input type="text" id="music-artist" placeholder="Enter artist or band name">
+                               <small>Error message</small>
+                           </div>
+                           <div class="form-control">
+                               <label for="music-country">Country</label>
+                               <input type="text" id="music-country" placeholder="Enter country of the artist">
+                               <small>Error message</small>
+                           </div>
+                           <div class="form-control">
+                               <label for="music-info">Info</label>
+                               <textarea id="music-info" class="text-area" name="music-info" rows="4" cols="31">Input info here.</textarea>
+                               <small>Error message</small>
+                           </div>
+                           <div class="form-control">
+                               <label for="music-tags">Tags (separated by ";")</label>
+                               <input type="text" id="music-tags" placeholder="Enter tags, separated by ';'">
+                               <small>Error message</small>
+                            </div>
+                           <div class="form-control">
+                               <div class="music-link-add-btn" id="music-link-add-btn">
+                                   <div class="btn-line"></div>
+                                   <div class="btn-line"></div>
+                               </div>
+                               <label for="music-link-1">Music Video Links (youtube)</label>
+                               <input type="text" id="music-link-1" placeholder="Enter youtube link.">
+                               <small>Error message</small>
+                               <label for="music-link-2"></label>
+                               <input type="text" id="music-link-2" placeholder="Enter youtube link.">
+                               <small>Error message</small>
+                            </div>
+                           <div class="form-control">
+                            <label for="music-img-link">Link to image (of any one album)</label>
+                            <input type="text" id="music-img-link" placeholder="Enter link ending in an img extension.">
+                            <small>Error message</small>
+                           </div>
+                           <button type ="button" class = "password-popup-btn">Submit</button>
+                        </form>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section> 
+
+<!-- Film Page -->    
+    <section class="film-page">
+        <div class="film-page-content">
+            <!-- back button to menu -->
+            <div class="film-page-back-btn" id="film-page-back-btn">
+                <div class="btn-line"></div>
+                <div class="btn-line"></div>
+            </div>
+
+            <img src="./img/film-page/projector.jpg" alt="" class="projector-img" id="film-page-projector-img">
+            <img src="./img/film-page/screen.jpg" alt="" class="cinema-img hidden" id="film-page-cinema-img">
+            <div class="video-container" id="film-page-video-container"></div> 
+
+            <nav class="DVD-nav show">
+                <div class="left-side" id="film-page-nav-left"></div>
+
+                <div class="right-side" id="film-page-nav-right">
+
+                    <div class="DVD-list-header">
+                        <h3>Movie Menu</h3>
+                    <img src="./img/film-page/lupa.png" alt="" class="DVD-search">
+                    </div>
+                    
+                    <ul class="DVD-list">
+                        <li class="DVD-item">
+                            <div class="DVD-img">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/Gold_rush_poster.jpg" alt="">
+                            </div>
+                            <div class="DVD-info">
+                                <img src="./img/film-page/action.png" id="" alt="">
+                                <img src="./img/film-page/lupa.png" alt="">
+                            </div>
+                        </li>
+                        <li class="DVD-item">
+                            <div class="DVD-img">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/Gold_rush_poster.jpg" alt="">
+                            </div>
+                            <div class="DVD-info">
+                                <img src="./img/film-page/action.png" alt="">
+                                <img src="./img/film-page/lupa.png" alt="">
+                            </div>
+                        </li>
+                        <li class="DVD-item">
+                            <div class="DVD-img">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/Gold_rush_poster.jpg" alt="">
+                            </div>
+                            <div class="DVD-info">
+                                <img src="./img/film-page/action.png" alt="">
+                                <img src="./img/film-page/lupa.png" alt="">
+                            </div>
+                        </li>
+                        <li class="DVD-item">
+                            <div class="DVD-img">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/Gold_rush_poster.jpg" alt="">
+                            </div>
+                            <div class="DVD-info">
+                                <img src="./img/film-page/action.png" alt="">
+                                <img src="./img/film-page/lupa.png" alt="">
+                            </div>
+                        </li>
+                        <li class="DVD-item">
+                            <div class="DVD-img">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/Gold_rush_poster.jpg" alt="">
+                            </div>
+                            <div class="DVD-info">
+                                <img src="./img/film-page/action.png" alt="">
+                                <img src="./img/film-page/lupa.png" alt="">
+                            </div>
+                        </li>
+                        <li class="DVD-item">
+                            <div class="DVD-img">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/Gold_rush_poster.jpg" alt="">
+                            </div>
+                            <div class="DVD-info">
+                                <img src="./img/film-page/action.png" alt="">
+                                <img src="./img/film-page/lupa.png" alt="">
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+         </div>
+        </div>  
+    </section>
+
+<!-- Book Page -->  
+    <section class="book-page">
+        <div class="book-page-content">
+            <video src="./video/book-page/main-video.webm" muted loop autoplay id="book-page-video"></video>
+            <div class="main">
+                <div class="left">
+                </div>
+                <div class="bookshelf">
+                   <div class="overlayer">
+                      <img src="./img/book-page/white_wall.png" alt="white_brick_wall_image"> 
+                   </div>
+                   <div class="controls">
+                       <img src="./img/book-page/arrow.png" alt="arrow-left" class="arrow-left">
+                       <img src="./img/book-page/arrow.png" alt="arrow-right" class="arrow-right">
+                   </div>
+                   <div class="shelf">
+                       <div class="row">
+                           <div class="loc">
+                               <div class="book"></div>
+                               <div class="book"></div>
+                               <div class="book"></div>
+                           </div>
+                       </div>
+                       <div class="row">
+                        <div class="loc">
+                            <div class="book"></div>
+                            <div class="book"></div>
+                            <div class="book"></div>
+                        </div>
+                    </div>
+                   </div>
+                </div>
+            </div>     
+        </div>  
+    </section>
+
+<!-- Music Page -->
+    <section class="music-page">
+        <div class="music-page-content" id="music-page-content">
+            <!-- back button to menu -->
+            <div class="music-page-back-btn" id="music-page-back-btn">
+                <div class="btn-line"></div>
+                <div class="btn-line"></div>
+            </div>
+
+            <!-- audio player for the audio file for the music transition -->
+            <audio preload="auto" id="music-page-player" autobuffer> 
+                <source src="./sound/music-page/music-page-transition-melody.mp3" />
+                <source src="./sound/music-page/music-page-transition-melody.wav" />  <!-- fallback if no mp3 support in browser -->
+              </audio>
+              
+            <img src="./img/music-page/piano-2.jpg" alt="piano image background" class="piano-img" id="music-page-piano-img">
+            <div class="ghost-img-container">
+                <!-- there are 60 ghost-elements-->
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+                <div class="ghost-element"></div>
+            </div>
+            <img src="./img/music-page/tv.jpg" alt="" class="TV-img hidden" id="music-page-tv-img">
+            <div class="video-container" id="music-page-video-container">
+                <img src="./img/music-page/film-grainy-texture.png" alt="" class="TV-filter-img"></img>
+            </div>
+             
+
+            <nav class="CD-nav show">
+                <div class="left-side" id="music-page-nav-left">
+
+                    
+                </div>
+
+                <div class="right-side" id="music-page-nav-right">
+                    <div class="CD-list-header">
+                        <h3>Music Menu</h3>
+                    <img src="./img/film-page/lupa.png" alt="" class="CD-search">
+                    </div>
+                    
+                    <ul class="CD-list">
+                        <li class="CD-item">
+                            <div class="CD-img">
+                                <img src="http://img.khan.co.kr/news/2018/11/04/l_2018110501000280300031321.jpg" alt="">
+                            </div>
+                            <div class="CD-info">
+                                <img src="./img/film-page/action.png" id="dummy-link-for-test" alt="">
+                                <img src="./img/film-page/lupa.png" alt="">
+                            </div>
+                        </li>
+                        <li class="CD-item">
+                            <div class="CD-img">
+                                <img src="http://img.khan.co.kr/news/2018/11/04/l_2018110501000280300031321.jpg" alt="">
+                            </div>
+                            <div class="CD-info">
+                                <img src="./img/film-page/action.png" id="dummy-link-for-test" alt="">
+                                <img src="./img/film-page/lupa.png" alt="">
+                            </div>
+                        </li>
+                        <li class="CD-item">
+                            <div class="CD-img">
+                                <img src="http://img.khan.co.kr/news/2018/11/04/l_2018110501000280300031321.jpg" alt="">
+                            </div>
+                            <div class="CD-info">
+                                <img src="./img/film-page/action.png" id="dummy-link-for-test" alt="">
+                                <img src="./img/film-page/lupa.png" alt="">
+                            </div>
+                        </li>
+                        <li class="CD-item">
+                            <div class="CD-img">
+                                <img src="http://img.khan.co.kr/news/2018/11/04/l_2018110501000280300031321.jpg" alt="">
+                            </div>
+                            <div class="CD-info">
+                                <img src="./img/film-page/action.png" id="dummy-link-for-test" alt="">
+                                <img src="./img/film-page/lupa.png" alt="">
+                            </div>
+                        </li>
+                        <li class="CD-item">
+                            <div class="CD-img">
+                                <img src="http://img.khan.co.kr/news/2018/11/04/l_2018110501000280300031321.jpg" alt="">
+                            </div>
+                            <div class="CD-info">
+                                <img src="./img/film-page/action.png" id="dummy-link-for-test" alt="">
+                                <img src="./img/film-page/lupa.png" alt="">
+                            </div>
+                        </li>
+                        <li class="CD-item">
+                            <div class="CD-img">
+                                <img src="http://img.khan.co.kr/news/2018/11/04/l_2018110501000280300031321.jpg" alt="">
+                            </div>
+                            <div class="CD-info">
+                                <img src="./img/film-page/action.png" id="dummy-link-for-test" alt="">
+                                <img src="./img/film-page/lupa.png" alt="">
+                            </div>
+                        </li>      
+                    </ul>
+                </div>
+            </nav>
+         </div>
+        </div>  
+    </section>
+
+    
+
+
+    
+    <script src="main-script.js"></script>
+    <script src="menu-page-script.js"></script>
+    <script src="book-page-script.js"></script>
+    <script src="film-page-script.js"></script>
+    <script src="music-page-script.js"></script>
+</body>
+</html>

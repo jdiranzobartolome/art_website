@@ -1,0 +1,463 @@
+/* import of menu-page google fonts */
+@import url("https://fonts.googleapis.com/css2?family=Ballet&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Allura&family=Parisienne&family=Rouge+Script&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@1,500&family=Dancing+Script:wght@700&display=swap");
+
+.menu-page {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.menu-page .menu-page-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #111;
+  color: #fff;
+}
+
+.menu-page .content {
+  /* Remember!! on flex items the width and height cannot be changed normally, 
+  you need to think "flexly". The parent is "display:flex" so you cannot define
+  width of the text section like this" 
+  width: 500px;  */
+  flex: 0 0 80%;
+  z-index: 10;
+
+  /* Remember!! The padding of the parent is not related to its 
+  content. When the content takes 100% of the width, the padding
+  is not included!!!! So, this flex item .text, does not take the whole
+  width of the page, because of the padding of its parent, .showcase.
+  Compruebalo si quieres descomentando lo siguiente*/
+  /*  background-color: red;  */
+}
+
+.menu-page .content ul {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  list-style: none;
+}
+
+.menu-page .content ul li {
+  transition: transform 1.5s ease;
+  padding: 10px;
+}
+
+/* recuerda, las transform no pueden ser a inline elements, no puedes hacerlo al "a" directamente */
+.menu-page .content ul li:hover {
+  transform: scale(1.1);
+  z-index: 101;
+}
+
+.menu-page .content ul a {
+  /* we need to give a position value different to static for z-index to take effect */
+  position: relative;
+  outline: 0;
+  text-decoration: none;
+  font-family: Parisienne;
+  font-size: 55px;
+  font-weight: 900;
+  color: #fff;
+  cursor: pointer;
+  opacity: 1;
+  z-index: 10;
+  transition: opacity 1s ease;
+}
+
+@media (min-width: 1084px) {
+  .menu-page .content ul a {
+    font-size: 65px;
+  }
+}
+
+.menu-page .content video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.8;
+}
+
+.menu-page .menu-page-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.75s ease;
+  background-color: #111;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.menu-page .show {
+  /*animation: overlay-transition 3s;*/
+  opacity: 1 !important;
+}
+
+/* ESTO FUNCIONA ASÍ? DEFINIR LA CLASE HIDDEN SOLO CUANDO ESTA DENTRO DE MENU-PAGE */
+.menu-page .hidden {
+  opacity: 0 !important;
+}
+
+/* art form button and art form CSS */
+.menu-page .art-form-btn {
+  position: absolute;
+  z-index: 100;
+  right: 35px;
+  bottom: 35px;
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  cursor: pointer;
+  background: radial-gradient(
+    circle,
+    #fff 0%,
+    #ccc 50%,
+    rgba(0, 0, 0, 0.8) 100%
+  );
+  /* NOTA!! RECUERDO PROBAR OTRO TIPO DE TRANSICIONES PARA LAS 
+  TRANSICIONES DE LA PAGINA! */
+  z-index: 9999;
+}
+
+.menu-page .art-form-btn .btn-line {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 28px;
+  height: 3px;
+  background: #000;
+  transition: all 0.5s ease-out;
+}
+
+.menu-page .art-form-btn .btn-line:first-of-type {
+  /* In transforms, the order of the operations is really important!!
+  the operations start being performed from the right!!
+  Aunque he de admitir que no sé porque esto funciona así,
+  yo creo que para funcionar tendría que estar al reves */
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.menu-page .art-form-btn .btn-line:first-of-type.close {
+  transform: translate(-50%, -50%) rotate(-315deg);
+}
+
+.menu-page .art-form-btn .btn-line:last-of-type.close {
+  transform: translate(-50%, -50%) rotate(135deg);
+}
+
+.menu-page .art-form-wrapper {
+  opacity: 0;
+  position: absolute;
+  bottom: 100px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.8);
+  height: 0;
+  width: 376px;
+  min-height: 250px;
+  max-height: 704px;
+  transform: translateY(100px);
+  border-radius: 25px;
+  transition-duration: 350ms;
+  transition-delay: 0s, 0s, 0s;
+  transition-timing-function: ease, ease, ease;
+  transition-property: width, height, max-height;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 4px 4px 8px 0 rgba(0, 0, 0, 0.4),
+    6px 6px 20px 0 rgba(0, 0, 0, 0.39);
+  transition: all 0.4s ease;
+}
+
+.menu-page .art-form-wrapper.show {
+  opacity: 1;
+  /* Importantisimo este keyword de "calc()" !!!! */
+  height: calc(100% - 120px);
+  transform: translateY(0);
+}
+
+.menu-page .art-form-header {
+  height: 30%;
+  width: 100%;
+  background-color: linear-gradient(
+    135deg,
+    rgb(80, 80, 80) 0%,
+    rgb(20, 20, 20) 100%
+  );
+  background-image: url(pattern-1.png) no-repeat 0 0;
+  position: relative;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  display: grid;
+  place-items: center;
+}
+
+.menu-page .art-form-header img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.2;
+  object-fit: fill;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+}
+
+.menu-page .art-form-header h2 {
+  width: 100%;
+  padding: 0px 0px;
+  font-size: 45px;
+  text-align: center;
+  font-family: Parisienne;
+}
+
+.menu-page .art-form-header h3 {
+  width: 100%;
+  padding: 5px 0px;
+  margin-bottom: 30px;
+  font-size: 30px;
+  text-align: center;
+  font-family: "Dancing Script";
+}
+
+.menu-page .art-form-content-wrapper {
+  height: 70%;
+  width: 100%;
+  background: radial-gradient(
+    circle,
+    rgb(250, 250, 250) 0%,
+    rgb(160, 160, 160) 100%
+  );
+  -moz-box-shadow: rgb(0 0 0 / 20%) 0px 21px 4px -20px;
+  box-shadow: rgb(0 0 0 / 20%) 10px -10px 15px inset,
+    rgb(0 0 0 / 20%) -10px 10px 15px inset;
+  position: relative;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+}
+
+/* BRUTAL ESTE LINK Y VIDEO DE SIMPLE LAYOUTS. USAR COMO REFERENCIA! 
+http://1linelayouts.glitch.me/ */
+.menu-page .art-form-content-container {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translate(-50%);
+  height: 103%;
+  width: 85%;
+  background: linear-gradient(45deg, rgb(90, 90, 90) 0%, rgb(35, 35, 35) 100%);
+  overflow: hidden;
+  border-radius: 5px;
+  box-shadow: rgb(0 0 0 / 30%) 10px 10px 10px 0px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: stretch;
+}
+
+.menu-page .art-form-content-container .art-form-selector {
+  height: 40px;
+  display: flex;
+  /* align items: stretch, is what makes the items be streatched on the perpendicular axis */
+  align-items: stretch;
+  justify-content: center;
+}
+
+.menu-page .art-form-content-container .art-form-selector li {
+  font-size: 25px;
+  text-align: center;
+  text-justify: auto;
+  line-height: 35px;
+  outline: none;
+  list-style: none;
+  /* this is what makes the items occupy all the available space */
+  flex: 1;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  background: linear-gradient(
+    90deg,
+    rgb(150, 150, 150) 0%,
+    rgb(105, 105, 105) 100%
+  );
+  font-family: "Dancing Script";
+  cursor: pointer;
+}
+
+.menu-page .art-form-content-container .art-form-selector li.pressed {
+  transform: scale(0.9);
+  background: linear-gradient(
+    90deg,
+    rgb(80, 80, 80) 0%,
+    rgb(45, 45, 45) 50%,
+    rgb(80, 80, 80) 100%
+  );
+}
+
+.menu-page .form {
+  width: 100%;
+  padding: 15px 20px;
+  overflow: auto;
+  display: none;
+  transition: opacity 2s ease;
+}
+
+.menu-page .form.show {
+  display: block;
+}
+
+.menu-page .form-control {
+  padding-bottom: 10px;
+  /*we want to position the error message (children of the form-control
+    in an absolute way to the form-control. So we position the form-control
+    as relative (for positioning something absolute within another element
+    that parent needs to be positioned "relative".  */
+  position: relative;
+}
+
+.menu-page .form-control label {
+  color: #fff;
+  display: block;
+  font-family: "Helvetica";
+  font-size: 14px;
+  margin-bottom: 5px;
+  font-style: italic;
+}
+
+.text-area {
+  border-radius: 5px;
+  border: solid 1px rgba(0, 0, 0, 0.7);
+  color: #000;
+  font-style: italic;
+  font-family: "Helvetica";
+  font-size: 14px;
+  font-weight: lighter;
+  outline: none;
+}
+
+.menu-page .form-control input {
+  /* I use position relative only for a single form-control, which has a button in it */
+  position: relative;
+  border: 2px solid #f0f0f0;
+  border-radius: 4px;
+  color: #000;
+  display: block;
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  font-family: Helvetica;
+  height: 16px;
+}
+
+.menu-page .form-control .film-link-add-btn,
+.menu-page .form-control .book-link-add-btn,
+.menu-page .form-control .music-link-add-btn {
+  position: absolute;
+  top: 2px;
+  z-index: 100;
+  width: 13px;
+  height: 13px;
+  border-radius: 5px;
+  cursor: pointer;
+  background: radial-gradient(circle, #fff 0%, #999 100%);
+  /* NOTA!! RECUERDO PROBAR OTRO TIPO DE TRANSICIONES PARA LAS 
+  TRANSICIONES DE LA PAGINA! */
+}
+
+.menu-page .form-control .film-link-add-btn {
+  right: 19%;
+}
+
+.menu-page .form-control .book-link-add-btn {
+  right: 78%;
+}
+
+.menu-page .form-control .music-link-add-btn {
+  right: 25%;
+}
+
+.menu-page .form-control .btn-line {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 3px;
+  background: #000;
+}
+
+.menu-page .form-control .btn-line:first-of-type {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+/*changing the default blue outline in the border of the input elements
+when the user clicks on them for writing. For that, we use outline:0. 
+However, we make the border change a little by ourselves so the user knows
+where he/she is focusing and writing on.  */
+.menu-page .form-control input:focus {
+  outline: 0;
+  border-color: #777;
+}
+
+.menu-page .form-control.success input {
+  border-color: var(--success-color);
+}
+
+.menu-page .form-control.error input {
+  border-color: var(--error-color);
+}
+
+.menu-page .form-control small {
+  color: rgb(151, 11, 11);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  /* we hide it for unhiding it in javascript when theres a form error.
+    Important: display:none is not the same as visiblity:hidden. With 
+    display: none the element makes the rest collapses, it literally dissapeares
+    completely. With visibility: hidden, it is just invisible but its there.*/
+  visibility: hidden;
+}
+
+.menu-page .form-control.error small {
+  visibility: visible;
+}
+
+.menu-page .form button {
+  cursor: pointer;
+  background-color: #077ac7;
+  border: 2px solid #34db;
+  border-radius: 4px;
+  color: #fff;
+  display: block;
+  font-size: 20px;
+  font-family: helvetica;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+/* Media Queries for the phone!! For really small! The rest of media queries (the ones that are not common, and where only used here and 
+there for small corrections when the screen became a little "laptop smaller") are within the code. Here I write the
+huge media queries that make this work for phones (under 500px width) */
+
+@media (max-width: 750px) {
+  .menu-page .content ul a {
+    font-size: 35px;
+  }
+}

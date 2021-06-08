@@ -1,0 +1,241 @@
+.film-page {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.film-page .film-page-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.film-page .film-page-back-btn {
+  position: absolute;
+  z-index: 100;
+  right: 25px;
+  top: 20px;
+  width: 35px;
+  height: 35px;
+  border-radius: 15px;
+  cursor: pointer;
+  background: radial-gradient(
+    circle,
+    #fff 0%,
+    #ccc 50%,
+    rgba(0, 0, 0, 0.8) 100%
+  );
+  /* NOTA!! RECUERDO PROBAR OTRO TIPO DE TRANSICIONES PARA LAS 
+  TRANSICIONES DE LA PAGINA! */
+  z-index: 9999;
+}
+
+.film-page .film-page-back-btn .btn-line {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 3px;
+  background: #000;
+  transition: all 0.5s ease-out;
+}
+
+.film-page .film-page-back-btn .btn-line:first-of-type {
+  /* In transforms, the order of the operations is really important!!
+  the operations start being performed from the right!!
+  Aunque he de admitir que no sé porque esto funciona así,
+  yo creo que para funcionar tendría que estar al reves */
+  transform: translate(-45%, 105%) rotate(-30deg);
+}
+
+.film-page .film-page-back-btn .btn-line:last-of-type {
+  /* In transforms, the order of the operations is really important!!
+  the operations start being performed from the right!!
+  Aunque he de admitir que no sé porque esto funciona así,
+  yo creo que para funcionar tendría que estar al reves */
+  transform: translate(-45%, -185%) rotate(30deg);
+}
+
+.film-page img.projector-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 4s ease;
+}
+
+.film-page img.cinema-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 4s ease;
+}
+
+.film-page .video-container {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50%;
+  height: 0px;
+  transition: height 4s ease;
+  background: #fff;
+  z-index: 100;
+
+  /* add maybe a movie white with old style lines effect later */
+}
+
+.film-page .hidden {
+  opacity: 0 !important;
+}
+
+.film-page .DVD-nav {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  opacity: 1;
+  visibility: hidden;
+}
+
+.film-page .DVD-nav.show {
+  visibility: visible;
+}
+
+.film-page .DVD-nav .left-side,
+.film-page .DVD-nav .right-side {
+  /* you can create two easy columns with float: left and 
+  50% of width and setting height for both children of a parent */
+  float: left;
+  width: 50%;
+  height: 100vh;
+}
+
+.film-page .DVD-nav .right-side {
+  background: rgba(0, 0, 0, 0.7);
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 2fr;
+  grid-column-gap: 20px;
+  align-items: stretch;
+  justify-content: stretch;
+  /* Translate is really useful for making objets look like
+  their are comming form somewhere. With translate3D, you kind
+  of play with their original (html) cordinate position */
+  transform: translate(0, -100%);
+  /* OJO!!! en transition you need to write tranform. The property is 
+  transform. Trnaslate is one of the variables of the property */
+  transition: transform 3s ease;
+}
+
+.film-page .DVD-nav .right-side.show {
+  transform: translate(0, 0);
+}
+
+.film-page .DVD-nav .left-side {
+  background: rgba(255, 255, 255, 0.5);
+  transform: translate(0, 100%);
+  transition: transform 3s ease;
+}
+
+.film-page .DVD-nav .left-side.show {
+  transform: translate(0, 0);
+}
+
+.film-page .DVD-nav .DVD-list-header {
+  position: relative;
+}
+
+.film-page .DVD-nav .DVD-list-header h3 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 60px;
+  text-align: center;
+  justify-content: center;
+  color: #fff;
+}
+
+.film-page .DVD-nav .DVD-list-header img {
+  position: absolute;
+  top: 50%;
+  right: 10%;
+  transform: translate(0, -50%);
+  width: 40px;
+  height: 40px;
+}
+
+.film-page .DVD-nav .DVD-list-header {
+  flex-grow: 2;
+}
+
+.film-page .DVD-nav .DVD-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  justify-items: stretch;
+  align-items: stretch;
+}
+
+.film-page .DVD-nav .DVD-list .DVD-item {
+  overflow: hidden;
+}
+
+.film-page .DVD-nav .DVD-img,
+.film-page .DVD-nav .DVD-info {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+}
+
+.film-page .DVD-nav .DVD-img img {
+  width: 110px;
+  height: 160px;
+}
+
+.film-page .DVD-nav .DVD-info img {
+  width: 35px;
+  height: 35px;
+  padding: 5px;
+  cursor: pointer;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.6);
+  border-top: 2px solid rgba(255, 255, 255, 0.6);
+}
+
+.film-page .DVD-nav .DVD-info img:first-of-type {
+  padding-right: 1px;
+}
+
+.film-page .DVD-nav .DVD-info img:last-of-type {
+  padding-left: 1px;
+}
+
+/* Media queries for the phone */
+
+@media (max-width: 750px) {
+  .film-page .DVD-nav .DVD-img img {
+    width: 55px;
+    height: 80px;
+  }
+
+  .film-page .DVD-nav .DVD-info img {
+    width: 18px;
+    height: 18px;
+    padding: 5px;
+  }
+}

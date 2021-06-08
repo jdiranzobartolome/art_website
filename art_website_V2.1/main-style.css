@@ -1,0 +1,221 @@
+/* import of the different css files */
+@import "menu-page-style.css";
+@import "book-page-style.css";
+
+/* main global css rules*/
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Parisienne, "Poppins", sans-serif;
+  color: #fff;
+}
+
+/* VITAL!!! THIS IS NEEDED FOR NOT ALLOWING SCROLLING IN PHONES, OTHERWISE IT DOES NOT WORK, SOMEHOW.
+HOWEVER, WHEN I ADD THIS, THE PHONE DOES NOT RENDER ANYTHING OUTSIDE OF THE VIEW...... */
+/*NO NECESARIO PARA NADA SI SE AÑADI LA PROPIEDAD MINIMUM-SCALE AL META DATA DEL HTML. MIRA EL INICIO 
+DEL HTML PARA MAS INFORMACION. */
+/* body,
+html {
+  overflow-x: hidden;
+} */
+
+body {
+  filter: contrast(120%);
+  filter: brightness(120%);
+  width: 100%;
+  height: 100vh;
+  /*min-height: 100vh;*/
+  /* transition: transform 3s ease;*/
+  transition: transform 7s ease;
+  overflow: hidden;
+}
+
+header {
+  /* positioning fix when the parent has a transform (like in this case the body, that you move for 
+    changing pages) make the position fixed not work. So you will have to move the header
+    at the same speed as the body so it looks static....)
+     position: fixed; */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 40px 60px;
+  display: flex;
+  align-items: center;
+  transition: transform 3s ease;
+  cursor: default;
+}
+
+.logo {
+  line-height: 27px;
+}
+
+.logo-1,
+.logo-3 {
+  font-size: 60px;
+}
+.logo-3 {
+  display: inline-block;
+}
+
+.logo-2 {
+  font-size: 25px;
+  justify-self: center;
+}
+
+.password-popup {
+  /* positioning fix when the parent has a transform (like in this case the body, that you move for 
+    changing pages) make the position fixed not work. So you will have to move the header
+    at the same speed as the body so it looks static....)
+     position: fixed; */
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.95);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  height: 70%;
+  z-index: 0;
+  opacity: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 1s ease;
+  border-radius: 5px;
+}
+
+.password-popup.visible {
+  /* positioning fix when the parent has a transform (like in this case the body, that you move for 
+    changing pages) make the position fixed not work. So you will have to move the header
+    at the same speed as the body so it looks static....)
+     position: fixed; */
+  z-index: 9999;
+  opacity: 1;
+}
+
+/* close button for the password-popup */
+.password-popup .close-btn {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  cursor: pointer;
+  background: radial-gradient(
+    circle,
+    rgb(250, 95, 95) 0%,
+    rgb(156, 31, 31) 50%,
+    rgba(90, 7, 7, 0.8) 100%
+  );
+}
+
+.password-popup .close-btn .btn-line {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 18px;
+  height: 3px;
+  background: #fff;
+}
+
+.password-popup .close-btn .btn-line:first-of-type {
+  transform: translate(-50%, -50%) rotate(-315deg);
+}
+
+.password-popup .close-btn .btn-line:last-of-type {
+  transform: translate(-50%, -50%) rotate(135deg);
+}
+
+.password-popup .div {
+  /* positioning fix when the parent has a transform (like in this case the body, that you move for 
+    changing pages) make the position fixed not work. So you will have to move the header
+    at the same speed as the body so it looks static....)
+     position: fixed; */
+  display: flex;
+  flex-direction: column;
+  flex-wrap: stretch;
+  transition: opacity 3s ease;
+  border-radius: 5px;
+}
+
+.password-popup .form-control {
+  padding-bottom: 10px;
+  align-items: stretch;
+  /*we want to position the error message (children of the form-control
+    in an absolute way to the form-control. So we position the form-control
+    as relative (for positioning something absolute within another element
+    that parent needs to be positioned "relative".  */
+  position: relative;
+}
+
+.password-popup .form-control label {
+  color: #fff;
+  display: block;
+  font-family: "Helvetica";
+  font-size: 14px;
+  margin-bottom: 5px;
+  font-style: italic;
+}
+
+.password-popup .form-control input {
+  /* I use position relative only for a single form-control, which has a button in it */
+  position: relative;
+  border: 2px solid #f0f0f0;
+  border-radius: 4px;
+  color: #000;
+  display: block;
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  font-family: Helvetica;
+  height: 16px;
+}
+
+.password-popup small {
+  position: absolute;
+  top: 150px;
+  left: 50%;
+  width: 75%;
+  text-align: center;
+  transform: translateX(-50%);
+  font-size: 20px;
+  font-family: helvetica;
+  /* we hide it for unhiding it in javascript when theres a form error.
+    Important: display:none is not the same as visiblity:hidden. With 
+    display: none the element makes the rest collapses, it literally dissapeares
+    completely. With visibility: hidden, it is just invisible but its there.*/
+  opacity: 0;
+  transition: opacity 10s ease;
+}
+
+.password-popup.error small {
+  color: rgb(151, 11, 11);
+}
+
+.password-popup.success small {
+  color: rgb(2, 122, 22);
+}
+
+.password-popup small.visible {
+  opacity: 100;
+  transition: opacity 1s ease-out;
+}
+
+.password-popup button {
+  cursor: pointer;
+  align-items: stretch;
+  background-color: #077ac7;
+  border: 2px solid #34db;
+  border-radius: 3px;
+  color: #fff;
+  display: block;
+  font-size: 14px;
+  font-family: helvetica;
+  padding: 2px;
+  margin-top: 5px;
+  width: 100%;
+}
