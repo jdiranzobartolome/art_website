@@ -6,11 +6,24 @@ const film_page_nav_right = document.getElementById("film-page-nav-right");
 const DVD_list = document.getElementById("DVD-list");
 const DVD_info_container = document.getElementById("DVD-info-container");
 const film_page_back_button = document.getElementById("film-page-back-btn");
+const film_page_controls = document.getElementById("film-page-controls");
 var transitionEnd = transitionEndEventName();
 var current_films = [];
+var page_number = 0;
 
 //Event Listeners
 film_page_back_button.addEventListener("click", () => filmToMenu());
+Array.prototype.slice.call(film_page_controls.children).forEach((item, index) => item.addEventListener("click", () => {
+    if (index === 0) {
+        page_number -= 1;
+        populateFilmMenu(page_number);
+    } else {
+        page_number += 1;
+        populateFilmMenu(page_number);
+    }
+})); 
+
+
 
 // I took it out cause now Im testing it on the music page
  // ONLY FOR TESTING THAT WHEN I CLICK THE VIDEO APPEARS NICELY
@@ -130,7 +143,10 @@ function transitionEndEventName () {
 }
 
 //YOUTUBE VIDEOS NEED TO BE IN /EMBED/ OPTION IN THE URL FOR THEM TO WORK IN WEBSITES OTHER THAN YOUTUBE.
-async function populateFilmMenu(page_number) {
+async function populateFilmMenu(page) {
+    // We set the state of global page_number to the page we are populating. 
+    page_number = page;
+
     const res = await fetch('http://localhost:3000/api/films', {
         method: 'GET',
         headers: {
@@ -149,6 +165,7 @@ async function populateFilmMenu(page_number) {
     // will need it)
 
     current_films = body.films;
+    const total_films = body['total-films'];
 
     // Reset of the DVD list, so the list gets populated from scratch.
     DVD_list.innerHTML = '';
@@ -163,10 +180,24 @@ async function populateFilmMenu(page_number) {
                                </li>`
     });
 
+    // show the arrow controls that are necessary, depending on the number of page and wether there are 
+    // more films to fetch. 
+    console.log(!film_page_controls.firstElementChild.classList.contains('hidden'));
+    if (page_number !== 0 && film_page_controls.firstElementChild.classList.contains('hidden')) 
+        film_page_controls.firstElementChild.classList.remove('hidden') 
+    if (page_number == 0 && !film_page_controls.firstElementChild.classList.contains('hidden')) 
+        film_page_controls.firstElementChild.classList.add('hidden') 
+    
+    console.log(film_page_controls.lastElementChild.classList.contains('hidden'));   
+    if ((total_films > ((page_number + 1)*6)) && film_page_controls.lastElementChild.classList.contains('hidden')) 
+        film_page_controls.lastElementChild.classList.remove('hidden'); 
+    if (!(total_films > ((page_number + 1)*6)) && !film_page_controls.lastElementChild.classList.contains('hidden')) 
+        film_page_controls.lastElementChild.classList.add('hidden');
+
     // Adding the click addEventListeners so the info of the DVD appears when clicking on the image 
-    Array.prototype.slice.call(DVD_list.children).forEach((item, index) => item.firstElementChild.addEventListener("click", () => {
+    Array.prototype.slice.call(DVD_list.children).forEach((item, index) => item.firstElementChild.firstElementChild.addEventListener("click", () => {
         document.getElementById('title').innerHTML = `${current_films[index].title}`;
-        document.getElementById('director').innerHTML = `${current_films[index].director}`;
+        document.getElementById('director').innerHTML = `by ${current_films[index].director}`;
         document.getElementById('country-year').innerHTML = `${current_films[index].country}, ${current_films[index].year}`;
         document.getElementById('info').innerHTML = `${current_films[index].info}`;
         // Modificar esto para que solo desaparezca clicando la misma. Si clicas otra imagen, no. 

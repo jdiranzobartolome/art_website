@@ -161,7 +161,7 @@
   transition: opacity 0.5s ease-out;
   width: 90%;
   height: 70%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.7);
   border-radius: 10px;
   position: absolute;
   top: 60%;
@@ -180,10 +180,6 @@
   border-radius: 15px;
   color: #000;
   background: rgba(0, 0, 0, 0.3);
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
   overflow: auto;
   align-content: center;
 }
@@ -192,18 +188,48 @@
   text-align: center;
 }
 
-.film-page h1 {
-  font-size: 45px;
+.film-page .DVD-info-container h1 {
+  font-size: 60px;
+  font-family: "Times New Roman", Times, serif;
+  text-align: center;
+  padding-top: 10px;
 }
 
-.film-page h2 {
-  font-size: 35px;
-}
-.film-page h3 {
+.film-page .DVD-info-container h2 {
   font-size: 25px;
+  text-align: center;
 }
-.film-page p {
-  font-size: 18px;
+
+.film-page .DVD-info-container h3 {
+  font-size: 20px;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.film-page .DVD-info-container .title-director h3 {
+  text-align: end;
+  padding-right: 15px;
+  margin-bottom: 5px;
+}
+
+.film-page .DVD-info-container .info {
+  padding: 15px;
+  padding-top: 0px;
+}
+
+.film-page .DVD-info-container .info h3 {
+  text-align: center;
+  font-size: 30px;
+  margin-bottom: 5px;
+}
+
+.film-page .DVD-info-container p {
+  font-size: 15px;
+  text-align: justify;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 15px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.3);
+  line-height: 20px;
 }
 
 .film-page .DVD-nav .left-side.show {
@@ -212,6 +238,8 @@
 
 .film-page .DVD-nav .DVD-list-header {
   position: relative;
+  flex-grow: 2;
+  height: 100%;
 }
 
 .film-page .DVD-nav .DVD-list-header h3 {
@@ -225,17 +253,38 @@
   color: #fff;
 }
 
-.film-page .DVD-nav .DVD-list-header img {
-  position: absolute;
-  top: 50%;
-  right: 10%;
-  transform: translate(0, -50%);
-  width: 40px;
-  height: 40px;
+.film-page .DVD-nav .controls {
+  width: 100%;
+  /*height: 70px;*/
+  opacity: 1;
+  background-color: #111;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  /* z-index: 10; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
 }
 
-.film-page .DVD-nav .DVD-list-header {
-  flex-grow: 2;
+.film-page .controls .arrow-left {
+  padding-right: 15px;
+  height: 40px;
+  transform: scaleX(-1);
+  cursor: pointer;
+}
+
+.film-page .controls .arrow-right {
+  height: 40px;
+  padding-left: 15px;
+  cursor: pointer;
+}
+
+/* Cuidado con los espacios. NO ES LO MISMO .arrow-right .hidden, QUE arror-right.hidden; */
+.film-page .controls .arrow-right.hidden,
+.film-page .controls .arrow-left.hidden {
+  /* Using visibility, and not only changing opacity to 0, makes the object not clickable.*/
+  visibility: hidden !important;
 }
 
 .film-page .DVD-nav .DVD-list {
@@ -262,6 +311,7 @@
 .film-page .DVD-nav .DVD-img img {
   width: 110px;
   height: 160px;
+  cursor: pointer;
 }
 
 .film-page .DVD-nav .DVD-info img {
