@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
-const MusicianSchema = new mongoose.Schema({
-    artist: {
+const SongSchema = new mongoose.Schema({
+    title: {
         type: String,
         required: true,
         // unique value since we do not want the same movie twice in the database
@@ -11,12 +11,20 @@ const MusicianSchema = new mongoose.Schema({
         // on the database, you want to still keep on saving this or cancel?"
         unique: true
     },
-    processedartist: {
+    processedtitle: {
         type: String,
         required: true,
         unique: true
     },
+    artist: {
+        type: String,
+        require: true,
+    },
     country: {
+        type: String,
+        require: true
+    },
+    year: {
         type: String,
         require: true
     },
@@ -24,12 +32,10 @@ const MusicianSchema = new mongoose.Schema({
         type: String,
         // We make the info not required
     },
-    tags: {
-        type: [String],
+    music_video: {
+        type: String,
+        // We make the trailer not required (as it might not be available online)
     },
-    musicvideos: {
-        type: [String],
-    }, 
     imglink: {
         type: String,
         // We make the img not required (as it might not be available online)
@@ -40,4 +46,4 @@ const MusicianSchema = new mongoose.Schema({
     }
 });
 
-module.exports = Musician = mongoose.model('musician', MusicianSchema);
+module.exports = Song = mongoose.model('song', SongSchema);

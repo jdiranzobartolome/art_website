@@ -3,7 +3,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Allura&family=Parisienne&family=Rouge+Script&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@1,500&family=Dancing+Script:wght@700&display=swap");
 
-.menu-page {
+.page--main-page {
   position: absolute;
   right: 0;
   top: 0;
@@ -12,7 +12,7 @@
   overflow: hidden;
 }
 
-.menu-page .menu-page-content {
+.page--main-page .page-content--main-page {
   position: relative;
   width: 100%;
   height: 100%;
@@ -24,7 +24,7 @@
   color: #fff;
 }
 
-.menu-page .content {
+.page--main-page .content {
   /* Remember!! on flex items the width and height cannot be changed normally, 
   you need to think "flexly". The parent is "display:flex" so you cannot define
   width of the text section like this" 
@@ -40,7 +40,7 @@
   /*  background-color: red;  */
 }
 
-.menu-page .content ul {
+.page--main-page .content ul {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -48,18 +48,18 @@
   list-style: none;
 }
 
-.menu-page .content ul li {
+.page--main-page .content ul li {
   transition: transform 1.5s ease;
   padding: 10px;
 }
 
 /* recuerda, las transform no pueden ser a inline elements, no puedes hacerlo al "a" directamente */
-.menu-page .content ul li:hover {
+.page--main-page .content ul li:hover {
   transform: scale(1.1);
   z-index: 101;
 }
 
-.menu-page .content ul a {
+.page--main-page .content ul a {
   /* we need to give a position value different to static for z-index to take effect */
   position: relative;
   outline: 0;
@@ -75,12 +75,12 @@
 }
 
 @media (min-width: 1084px) {
-  .menu-page .content ul a {
+  .page--main-page .content ul a {
     font-size: 65px;
   }
 }
 
-.menu-page .content video {
+.page--main-page .content video {
   position: absolute;
   top: 0;
   left: 0;
@@ -90,7 +90,7 @@
   opacity: 0.8;
 }
 
-.menu-page .menu-page-overlay {
+.page--main-page .page--main-page-overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -103,18 +103,18 @@
   pointer-events: none;
 }
 
-.menu-page .show {
+.page--main-page .show {
   /*animation: overlay-transition 3s;*/
   opacity: 1 !important;
 }
 
 /* ESTO FUNCIONA ASÍ? DEFINIR LA CLASE HIDDEN SOLO CUANDO ESTA DENTRO DE MENU-PAGE */
-.menu-page .hidden {
+.page--main-page .hidden {
   opacity: 0 !important;
 }
 
 /* art form button and art form CSS */
-.menu-page .art-form-btn {
+.page--main-page .art-form-btn {
   position: absolute;
   z-index: 100;
   right: 35px;
@@ -134,7 +134,7 @@
   z-index: 9999;
 }
 
-.menu-page .art-form-btn .btn-line {
+.page--main-page .art-form-btn .btn-line {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -145,23 +145,23 @@
   transition: all 0.5s ease-out;
 }
 
-.menu-page .art-form-btn .btn-line:first-of-type {
+.page--main-page .art-form-btn .btn-line:first-of-type {
   /* In transforms, the order of the operations is really important!!
   the operations start being performed from the right!!
   Aunque he de admitir que no sé porque esto funciona así,
-  yo creo que para funcionar tendría que estar al reves */
+  yo creo que para funcionar tendría que esttransform: translate(-50%, -50%) rotate(90deg);ar al reves */
   transform: translate(-50%, -50%) rotate(90deg);
 }
 
-.menu-page .art-form-btn .btn-line:first-of-type.close {
+.page--main-page .art-form-btn .btn-line:first-of-type.close {
   transform: translate(-50%, -50%) rotate(-315deg);
 }
 
-.menu-page .art-form-btn .btn-line:last-of-type.close {
+.page--main-page .art-form-btn .btn-line:last-of-type.close {
   transform: translate(-50%, -50%) rotate(135deg);
 }
 
-.menu-page .art-form-wrapper {
+.page--main-page .art-form-wrapper {
   opacity: 0;
   position: absolute;
   bottom: 100px;
@@ -185,14 +185,14 @@
   transition: all 0.4s ease;
 }
 
-.menu-page .art-form-wrapper.show {
+.page--main-page .art-form-wrapper.show {
   opacity: 1;
   /* Importantisimo este keyword de "calc()" !!!! */
   height: calc(100% - 120px);
   transform: translateY(0);
 }
 
-.menu-page .art-form-header {
+.page--main-page .art-form-header {
   height: 30%;
   width: 100%;
   background-color: linear-gradient(
@@ -208,7 +208,7 @@
   place-items: center;
 }
 
-.menu-page .art-form-header img {
+.page--main-page .art-form-header img {
   position: absolute;
   top: 0;
   left: 0;
@@ -220,7 +220,7 @@
   border-top-right-radius: 25px;
 }
 
-.menu-page .art-form-header h2 {
+.page--main-page .art-form-header h2 {
   width: 100%;
   padding: 0px 0px;
   font-size: 45px;
@@ -228,7 +228,7 @@
   font-family: Parisienne;
 }
 
-.menu-page .art-form-header h3 {
+.page--main-page .art-form-header h3 {
   width: 100%;
   padding: 5px 0px;
   margin-bottom: 30px;
@@ -237,7 +237,7 @@
   font-family: "Dancing Script";
 }
 
-.menu-page .art-form-content-wrapper {
+.page--main-page .art-form-content-wrapper {
   height: 70%;
   width: 100%;
   background: radial-gradient(
@@ -255,7 +255,7 @@
 
 /* BRUTAL ESTE LINK Y VIDEO DE SIMPLE LAYOUTS. USAR COMO REFERENCIA! 
 http://1linelayouts.glitch.me/ */
-.menu-page .art-form-content-container {
+.page--main-page .art-form-content-container {
   position: absolute;
   top: -30px;
   left: 50%;
@@ -271,7 +271,7 @@ http://1linelayouts.glitch.me/ */
   flex-wrap: stretch;
 }
 
-.menu-page .art-form-content-container .art-form-selector {
+.page--main-page .art-form-content-container .art-form-selector {
   height: 40px;
   display: flex;
   /* align items: stretch, is what makes the items be streatched on the perpendicular axis */
@@ -279,7 +279,7 @@ http://1linelayouts.glitch.me/ */
   justify-content: center;
 }
 
-.menu-page .art-form-content-container .art-form-selector li {
+.page--main-page .art-form-content-container .art-form-selector li {
   font-size: 25px;
   text-align: center;
   text-justify: auto;
@@ -298,7 +298,7 @@ http://1linelayouts.glitch.me/ */
   cursor: pointer;
 }
 
-.menu-page .art-form-content-container .art-form-selector li.pressed {
+.page--main-page .art-form-content-container .art-form-selector li.pressed {
   transform: scale(0.9);
   background: linear-gradient(
     90deg,
@@ -308,7 +308,7 @@ http://1linelayouts.glitch.me/ */
   );
 }
 
-.menu-page .form {
+.page--main-page .form {
   width: 100%;
   padding: 15px 20px;
   overflow: auto;
@@ -316,11 +316,11 @@ http://1linelayouts.glitch.me/ */
   transition: opacity 2s ease;
 }
 
-.menu-page .form.show {
+.page--main-page .form.show {
   display: block;
 }
 
-.menu-page .form-control {
+.page--main-page .form-control {
   padding-bottom: 10px;
   /*we want to position the error message (children of the form-control
     in an absolute way to the form-control. So we position the form-control
@@ -329,7 +329,7 @@ http://1linelayouts.glitch.me/ */
   position: relative;
 }
 
-.menu-page .form-control label {
+.page--main-page .form-control label {
   color: #fff;
   display: block;
   font-family: "Helvetica";
@@ -349,7 +349,7 @@ http://1linelayouts.glitch.me/ */
   outline: none;
 }
 
-.menu-page .form-control input {
+.page--main-page .form-control input {
   /* I use position relative only for a single form-control, which has a button in it */
   position: relative;
   border: 2px solid #f0f0f0;
@@ -363,9 +363,9 @@ http://1linelayouts.glitch.me/ */
   height: 16px;
 }
 
-.menu-page .form-control .film-link-add-btn,
-.menu-page .form-control .book-link-add-btn,
-.menu-page .form-control .music-link-add-btn {
+.page--main-page .form-control .film-link-add-btn,
+.page--main-page .form-control .book-link-add-btn,
+.page--main-page .form-control .music-link-add-btn {
   position: absolute;
   top: 2px;
   z-index: 100;
@@ -378,19 +378,19 @@ http://1linelayouts.glitch.me/ */
   TRANSICIONES DE LA PAGINA! */
 }
 
-.menu-page .form-control .film-link-add-btn {
+.page--main-page .form-control .film-link-add-btn {
   right: 19%;
 }
 
-.menu-page .form-control .book-link-add-btn {
+.page--main-page .form-control .book-link-add-btn {
   right: 78%;
 }
 
-.menu-page .form-control .music-link-add-btn {
+.page--main-page .form-control .music-link-add-btn {
   right: 25%;
 }
 
-.menu-page .form-control .btn-line {
+.page--main-page .form-control .btn-line {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -400,7 +400,7 @@ http://1linelayouts.glitch.me/ */
   background: #000;
 }
 
-.menu-page .form-control .btn-line:first-of-type {
+.page--main-page .form-control .btn-line:first-of-type {
   transform: translate(-50%, -50%) rotate(90deg);
 }
 
@@ -408,20 +408,20 @@ http://1linelayouts.glitch.me/ */
 when the user clicks on them for writing. For that, we use outline:0. 
 However, we make the border change a little by ourselves so the user knows
 where he/she is focusing and writing on.  */
-.menu-page .form-control input:focus {
+.page--main-page .form-control input:focus {
   outline: 0;
   border-color: #777;
 }
 
-.menu-page .form-control.success input {
+.page--main-page .form-control.success input {
   border-color: var(--success-color);
 }
 
-.menu-page .form-control.error input {
+.page--main-page .form-control.error input {
   border-color: var(--error-color);
 }
 
-.menu-page .form-control small {
+.page--main-page .form-control small {
   color: rgb(151, 11, 11);
   position: absolute;
   bottom: 0;
@@ -433,11 +433,11 @@ where he/she is focusing and writing on.  */
   visibility: hidden;
 }
 
-.menu-page .form-control.error small {
+.page--main-page .form-control.error small {
   visibility: visible;
 }
 
-.menu-page .form button {
+.page--main-page .form button {
   cursor: pointer;
   background-color: #077ac7;
   border: 2px solid #34db;
@@ -457,7 +457,7 @@ there for small corrections when the screen became a little "laptop smaller") ar
 huge media queries that make this work for phones (under 500px width) */
 
 @media (max-width: 750px) {
-  .menu-page .content ul a {
+  .page--main-page .content ul a {
     font-size: 35px;
   }
 }

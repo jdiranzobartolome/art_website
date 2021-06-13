@@ -51,9 +51,7 @@ router.post('/', [auth, [
         country: req.body.country,
         year: req.body.year,
         info: req.body.info,
-        tags: req.body.tags ? req.body.tags.split(';').map(tag => tag.trim()) : "",
         trailer: req.body.trailer,
-        scenes: req.body.scenes,
         imglink: req.body.imglink,
     });
 

@@ -40,7 +40,7 @@ app.get('/', (req, res) => res.send('API running'));
 //app.use('/api/auth', require('./routes/api/auth'));
 app.use('/api/films', require('./routes/api/films'));
 app.use('/api/books', require('./routes/api/books')); 
-app.use('/api/musicians', require('./routes/api/musicians'));
+app.use('/api/songs', require('./routes/api/songs'));
 
 const PORT = process.env.PORT || 3000;
 

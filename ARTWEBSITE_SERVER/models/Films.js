@@ -32,16 +32,10 @@ const FilmSchema = new mongoose.Schema({
         type: String,
         // We make the info not required
     },
-    tags: {
-        type: [String],
-    },
     trailer: {
         type: String,
         // We make the trailer not required (as it might not be available online)
     },
-    scenes: {
-        type: [String],
-    }, 
     imglink: {
         type: String,
         // We make the img not required (as it might not be available online)

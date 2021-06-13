@@ -3,18 +3,24 @@ const router = express.Router();
 const auth = require('../../middleware/auth');
 const { check, validationResult} = require('express-validator/check');
 
-const Musician = require('../../models/Musicians');
+const Song = require('../../models/Songs');
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// @route    POST api/musicians/
-// @desc     Upload a musician
+// @route    POST api/songs/
+// @desc     Upload a song
 // @access   Private
 router.post('/', [auth, [
-    check('artist', 'Title field is required')
+    check('title', 'Title field is required')
+    .not()
+    .isEmpty(),
+    check('artist', 'Director field is required')
     .not()
     .isEmpty(),
     check('country', 'Country field is required')
+    .not()
+    .isEmpty(),
+    check('year', 'Year field is required')
     .not()
     .isEmpty()
     //@todo - validation of the tag
@@ -28,36 +34,37 @@ router.post('/', [auth, [
         return res.status(400).json({ errors: errors.array() });
     }
 
-    // creating musician for uploading
-    const newMusician = new Musician({
+    // creating song for uploading
+    const newSong = new Song({
+        title: req.body.title,
+        processedtitle: (req.body.title).replace(/\s+/g, '').toLowerCase(),
         artist: req.body.artist,
-        processedartist: (req.body.artist).replace(/\s+/g, '').toLowerCase(),
         country: req.body.country,
+        year: req.body.year,
         info: req.body.info,
-        tags: req.body.tags ? req.body.tags.split(';').map(tag => tag.trim()) : "",
-        musicvideos: req.body.musicvideos,
+        music_video: req.body.music_video,
         imglink: req.body.imglink,
     });
 
     try {
-        // See if the film exists, for that we use the artist "processedartist" created only for not allowing the user to 
-        // upload movies to the database with same artist because of different case or spaces. 
-        processedartist = (req.body.artist).replace(/\s+/g, '').toLowerCase();
-        let musician = await Musician.findOne({ processedartist });
-        if(musician) {
-            return res.status(400).json({errors: [{ msg: 'Musician with same name already in the database' }]});
+        // See if the film exists, for that we use the title "processedtitle" created only for not allowing the user to 
+        // upload movies to the database with same title because of different case or spaces. 
+        processedtitle = (req.body.title).replace(/\s+/g, '').toLowerCase();
+        let film = await Film.findOne({ processedtitle });
+        if(film) {
+            return res.status(400).json({errors: [{ msg: 'Movie with same title already in the database' }]});
         }
         // Upload
-        const uploaded_musician = await newMusician.save();
-        res.json(uploaded_musician);
+        const uploaded_film = await newFilm.save();
+        res.json(uploaded_film);
     } catch (err) {
         console.error(err.message);
         // handling duplicate key error case (in the case they input a movie already on the database)
         // could be solved like this but I will do it outside since it is cleaner, and I can also trim spaces and 
-        // not differentiate between capital and non capital letters on the artist, which using only the error of 
+        // not differentiate between capital and non capital letters on the title, which using only the error of 
         // mongoose because of duplicate unique keys, I cannot. But, I still leave it just in case. 
         if ( err && err.code === 11000 ) {
-            return res.status(400).json({errors: [{ msg: 'Musician with same name already in the database' }]});
+            return res.status(400).json({errors: [{ msg: 'Movie with same title already in the database' }]});
         }
         res.status(500).send('Server Error');
     }

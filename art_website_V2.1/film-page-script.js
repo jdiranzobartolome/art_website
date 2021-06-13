@@ -170,11 +170,11 @@ async function populateFilmMenu(page) {
     // Reset of the DVD list, so the list gets populated from scratch.
     DVD_list.innerHTML = '';
     current_films.forEach((item, index) => {
-        DVD_list.innerHTML += `<li class="DVD-item">
-                                  <div class="DVD-img">
+        DVD_list.innerHTML += `<li class="item">
+                                  <div class="item__main-img item__main-img--film-page">
                                     <img src="${item.imglink}" alt="">
                                   </div>
-                                  <div class="DVD-info">
+                                  <div class="item__secondary-img item__secondary-img--film-page">
                                     <img src="./img/film-page/action.png" id="trailer-link-${index}" alt="">
                                   </div>
                                </li>`

@@ -4,43 +4,52 @@ const music_page_video_container = document.getElementById("music-page-video-con
 const music_page_nav_left = document.getElementById("music-page-nav-left");
 const music_page_nav_right = document.getElementById("music-page-nav-right");
 const music_page_content = document.getElementById("music-page-content");
-const ghost_elements = document.querySelectorAll(".music-page .ghost-element");
+const ghost_img = document.getElementById("ghost-img");
+const ghost_elements = Array.from(ghost_img.children);
 var music_page_player = document.getElementById("music-page-player");
 var transitionEnd = transitionEndEventName();
 
+
 // ONLY FOR TESTING THAT WHEN I CLICK THE VIDEO APPEARS NICELY
-const dummy_link = document.getElementById("dummy-link-for-test");
-dummy_link.addEventListener("click", () => startMusicVideo()); 
+// const dummy_link = document.getElementById("dummy-link-for-test");
+// dummy_link.addEventListener("click", () => startMusicVideo()); 
 
 
 // function for creating or disintegrating the ghost image. It is a recursive funcition which
 // calls itself continuously.
-function ghostImage(index, disintegrate) {
-    /* la position del backgorund se podria poner en CSS pero habria que hacerlo 
+function ghostImage(index, dissapear) {
+    // Remove hide from the ghost_img in case it was hidden from previous iterations.
+    ghost_img.classList.remove("hide");
+    /* la position del background se podria poner en CSS pero habria que hacerlo 
             individualmente para cada uno de los ghost elements, que son muchos. Así que 
             lo hago con javascript */
     ghost_elements[index].style.backgroundPosition = `${index*(-10)}px 0px`
-    if (disintegrate === false ) {
-        ghost_elements[index].classList.add("show");
-    } else {
-        ghost_elements[index].classList.add("disintegrate");
-    }
-    ghost_elements[index].addEventListener(transitionEnd, function _listener() {
+    ghost_elements[index].classList.add("show");
+    ghost_elements[index].addEventListener('transitionend', () => {
        // We will enter here for the first transition end, we could check for which 
        // transitions are thby checking out event.type, but we dont need it. 
-       ghost_elements[index].removeEventListener(transitionEnd, _listener);
        if (ghost_elements.length !== (index + 1)) {
-        ghostImage(index + 1, disintegrate);
-       } else if (disintegrate) {
-               // Once the image is totally desintegrated we can safely remove all "show" and "disintegrated classes"
-               ghost_elements.forEach(item => item.classList.remove("show"));
-               ghost_elements.forEach(item => item.classList.remove("disintegrate"));
+        ghostImage(index + 1, dissapear);
+       } else if (dissapear) {
+               // Once the image is totally created we can safely make it 
+               // dissapear and remove all "show"
+               ghost_img.classList.add('hide');
+               ghost_img.addEventListener('transitionend', function _listener_2(e) {
+                // IMPORTANT!!
+                // Checking the target so the event is not fired by transitionend of 
+                // its children (events bubble up through their parents chaing)
+                if (e.target !== ghost_img) {return}
+                ghost_img.removeEventListener('transitionend', _listener_2);
+                ghost_elements.forEach((item) => item.classList.remove("show"));
+                console.log('transitionend fired');
+              });  
         }
-    });   
-}
+    }, { once: true }); 
 
-function ghostImage_dissapear(index) {
-    
+    // Now that the ghost image got created, we make it dissapear inmmediately.
+    // But not the whole image (we could use ghostImage() with the second argument
+    // to true to make it dissapear one element at a time, but I like it better 
+    // with the whole image dissapearing as a whole. )
 }
 
 function startMusicVideo() {
@@ -59,7 +68,6 @@ function showMusicMenu(){
 
 function startTV() {
     hideMusicMenu();
-    // Uncomment this and comment the rest for making the image disintigrate instead of dissapear
     //ghostImage(0, true)
 
     fitMusicVideoContainer();
