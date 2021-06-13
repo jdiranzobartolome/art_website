@@ -47,28 +47,29 @@ function filmToMenu() {
 function hideFilmMenu(){
     film_page_nav_left.classList.remove("show");
     film_page_nav_right.classList.remove("show");
+    film_page_back_button.style.visibility = 'hidden';
 }
 
 function showFilmMenu(){
     film_page_nav_left.classList.add("show");
     film_page_nav_right.classList.add("show");
+    film_page_back_button.style.visibility = 'visible';
 }
 
 function expandScreen() {
     console.log('entre a expandScren');
     hideFilmMenu();
     //since both sides of the nav do the same transition, just cheking one side is enough
-    film_page_nav_left.addEventListener('transitionend', function _listener_1() {
+    film_page_nav_left.addEventListener(transitionEnd, function _listener_1() {
 
         film_page_projector_img.classList.toggle("hidden");
         film_page_cinema_img.classList.toggle("hidden");
         film_page_video_container.style.height = "49%";
-        film_page_video_container.addEventListener('transitionend', function _listener_2() {
+        film_page_video_container.addEventListener(transitionEnd, function _listener_2() {
 
             // The screen will retract when clicking outside of it. I put it here
             // so the click is only accepted after the screen has been
             // totally expanded. 
-            const controller = new AbortController();
             document.body.addEventListener("click", function _listener_3(e) {
                 console.log("Hide Screen Listener");
                 if ((e.target !== film_page_video_container) && (film_page_video_container.innerHTML !== '')) {
@@ -95,10 +96,16 @@ function hideScreen() {
     showFilmMenu();
 }
 
-async function playVideo(link) {
+async function playVideo(link, type) {
     
-    //Expanding screen
-    expandScreen();
+    if (type === 'film') {
+        //Expanding film screen
+        expandScreen();
+    } else if (type === 'music') {
+        //Opening TV screen
+        startTV();
+    }
+
 
     // Using youtube API for finding out info about the video for fetching the embed video url.
     // Should add some feedback to the user if the request fails.
@@ -112,9 +119,17 @@ async function playVideo(link) {
 
     // Starting video
     const output =`
-    <iframe width="100%" height="100%" src="${embed_link}" allow="autoplay" frameborder="0"></iframe>
+    <iframe width="100%" height="100%" src="${embed_link}" frameborder="0"></iframe>
   `;
-    film_page_video_container.innerHTML = output;
+    
+    if (type === 'film') {
+        //playing video on film scree
+        film_page_video_container.innerHTML = output;
+    } else if (type === 'music') {
+        //Opening TV screen
+        music_page_video_container.innerHTML = output;
+    }
+    
 }
 
 
@@ -196,10 +211,10 @@ async function populateFilmMenu(page) {
 
     // Adding the click addEventListeners so the info of the DVD appears when clicking on the image 
     Array.prototype.slice.call(DVD_list.children).forEach((item, index) => item.firstElementChild.firstElementChild.addEventListener("click", () => {
-        document.getElementById('title').innerHTML = `${current_films[index].title}`;
-        document.getElementById('director').innerHTML = `by ${current_films[index].director}`;
-        document.getElementById('country-year').innerHTML = `${current_films[index].country}, ${current_films[index].year}`;
-        document.getElementById('info').innerHTML = `${current_films[index].info}`;
+        document.getElementById('film-title').innerHTML = `${current_films[index].title}`;
+        document.getElementById('film-director').innerHTML = `by ${current_films[index].director}`;
+        document.getElementById('film-country-year').innerHTML = `${current_films[index].country}, ${current_films[index].year}`;
+        document.getElementById('film-info').innerHTML = `${current_films[index].info}`;
         // Modificar esto para que solo desaparezca clicando la misma. Si clicas otra imagen, no. 
         // Ya que lo único que tiene que pasar es que se cambie la información. 
         DVD_info_container.classList.toggle('hidden');
@@ -207,7 +222,7 @@ async function populateFilmMenu(page) {
 
     // Get all elements whose id start with "trailer-link" and add event listeners.
     document.querySelectorAll('[id^="trailer-link"]').forEach((item, index) => item.addEventListener("click", () => {
-        playVideo(current_films[index].trailer);
+        playVideo(current_films[index].trailer, 'film');
     })); 
 
     //Lastly, outside of this function, event listeners will be added to each populated image so when you click on it, the 

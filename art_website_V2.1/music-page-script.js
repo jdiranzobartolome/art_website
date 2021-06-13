@@ -4,28 +4,54 @@ const music_page_video_container = document.getElementById("music-page-video-con
 const music_page_nav_left = document.getElementById("music-page-nav-left");
 const music_page_nav_right = document.getElementById("music-page-nav-right");
 const music_page_content = document.getElementById("music-page-content");
-const ghost_img = document.getElementById("ghost-img");
-const ghost_elements = Array.from(ghost_img.children);
+const ghost_img_container = document.getElementById("ghost-img-container");
+const music_page_back_button = document.getElementById("music-page-back-btn");
+const ghost_elements = Array.from(ghost_img_container.firstElementChild.children);
+const song_info_container = document.getElementById("song-info-container");
+const music_page_controls = document.getElementById("music-page-controls");
 var music_page_player = document.getElementById("music-page-player");
 var transitionEnd = transitionEndEventName();
 
+//Event Listeners
+music_page_back_button.addEventListener("click", () => musicToMenu());
+Array.prototype.slice.call(music_page_controls.children).forEach((item, index) => item.addEventListener("click", () => {
+    if (index === 0) {
+        page_number -= 1;
+        populateMusicMenu(page_number);
+    } else {
+        page_number += 1;
+        populateMusicMenu(page_number);
+    }
+})); 
 
-// ONLY FOR TESTING THAT WHEN I CLICK THE VIDEO APPEARS NICELY
-// const dummy_link = document.getElementById("dummy-link-for-test");
-// dummy_link.addEventListener("click", () => startMusicVideo()); 
+
+function musicToMenu() {
+    // Forcing the same effect as if we stopped hovering over the menu "film"
+    // link so the video and the visuals of the menu are resetted. However, 
+    // I need to find out why this is needed.This function is deined in menu-page-script.js
+    ChangeMenuVideo(2, false);
+    // Removing the song-list menu and moving to menu page. 
+    music_page_nav_left.classList.remove("show");
+    music_page_nav_right.classList.remove("show");
+    document.body.style.transition = "transform 3s ease";
+    document.body.style.transform = "translate(0,0)";
+    header.style.transition = "transform 3s ease"
+    header.style.transform = "translate(0,0)";
+}
 
 
 // function for creating or disintegrating the ghost image. It is a recursive funcition which
 // calls itself continuously.
 function ghostImage(index, dissapear) {
     // Remove hide from the ghost_img in case it was hidden from previous iterations.
-    ghost_img.classList.remove("hide");
+    ghost_img_container.classList.remove("hide");
+    ghost_img_container.style.visibility='visible';
     /* la position del background se podria poner en CSS pero habria que hacerlo 
             individualmente para cada uno de los ghost elements, que son muchos. Así que 
             lo hago con javascript */
     ghost_elements[index].style.backgroundPosition = `${index*(-10)}px 0px`
     ghost_elements[index].classList.add("show");
-    ghost_elements[index].addEventListener('transitionend', () => {
+    ghost_elements[index].addEventListener(transitionEnd, () => {
        // We will enter here for the first transition end, we could check for which 
        // transitions are thby checking out event.type, but we dont need it. 
        if (ghost_elements.length !== (index + 1)) {
@@ -33,15 +59,15 @@ function ghostImage(index, dissapear) {
        } else if (dissapear) {
                // Once the image is totally created we can safely make it 
                // dissapear and remove all "show"
-               ghost_img.classList.add('hide');
-               ghost_img.addEventListener('transitionend', function _listener_2(e) {
+               ghost_img_container.classList.add('hide');
+               ghost_img_container.addEventListener(transitionEnd, function _listener_2(e) {
                 // IMPORTANT!!
                 // Checking the target so the event is not fired by transitionend of 
                 // its children (events bubble up through their parents chaing)
-                if (e.target !== ghost_img) {return}
-                ghost_img.removeEventListener('transitionend', _listener_2);
+                if (e.target !== ghost_img_container) {return}
+                ghost_img_container.removeEventListener(transitionEnd, _listener_2);
                 ghost_elements.forEach((item) => item.classList.remove("show"));
-                console.log('transitionend fired');
+                ghost_img_container.style.visibility = 'hidden';
               });  
         }
     }, { once: true }); 
@@ -52,18 +78,34 @@ function ghostImage(index, dissapear) {
     // with the whole image dissapearing as a whole. )
 }
 
-function startMusicVideo() {
-    startTV();
-}
+// function startMusicVideo() {
+//     startTV();
+// }
 
 function hideMusicMenu(){
     music_page_nav_left.classList.remove("show");
     music_page_nav_right.classList.remove("show");
+    music_page_back_button.style.visibility = 'hidden';
 }
 
 function showMusicMenu(){
     music_page_nav_left.classList.add("show");
     music_page_nav_right.classList.add("show");
+    music_page_back_button.style.visibility = 'visible';
+}
+
+function hideTV() {
+    showMusicMenu();
+    music_page_tv_img.classList.toggle("hidden");
+    music_page_piano_img.classList.toggle("hidden");
+    // Not necessary, but it is not a bad idea
+    // to add an eventListener after toggling hidden transitions so when the transition 
+    // finishes, the object does really go visibility=hidden. In this case I do not want the 
+    // transition when dissapearing so I turn it hidden before. 
+    music_page_video_container.style.visibility = "hidden";
+    music_page_video_container.style.opacity = "0";
+    music_page_video_container.style.pointerEvents = "none";
+    
 }
 
 function startTV() {
@@ -71,28 +113,42 @@ function startTV() {
     //ghostImage(0, true)
 
     fitMusicVideoContainer();
+
     //since both sides of the nav do the same transition, just cheking one side is enough
-    music_page_nav_left.addEventListener(transitionEnd, function _listener() {
-        music_page_nav_left.removeEventListener(transitionEnd, _listener);
+    music_page_nav_left.addEventListener(transitionEnd, () => {
         music_page_tv_img.classList.toggle("hidden");
         music_page_piano_img.classList.toggle("hidden");
+        music_page_video_container.style.visibility = "visible";
         music_page_video_container.style.opacity = "1";
         music_page_video_container.style.pointerEvents = "all";
         music_page_video_container.addEventListener(transitionEnd, function _listener() {
-            removeEventListener(transitionEnd, _listener);
-            playMusicVideo();
-      });
-      });
+            // The TV image will close when clicking outside of the TV screen. I put it here
+            // so the click is only accepted after the TV image and screen appeared.
+            document.body.addEventListener("click", function _listener_3(e) {
+                console.log("Hide TV Listener");
+                if ((e.target !== music_page_video_container) && (music_page_video_container.innerHTML !== '')) {
+                    //Okay... remember to always add the Element when doing removeEventListener. 
+                    // Also, there is an option in addEventListeners to run it only once.
+                    // In addition, besides the removeEventListener method, ther is also a controller.abort() method,
+                    // remember all this!
+                    hideTV();
+                    document.body.removeEventListener("click", _listener_3);
+                    music_page_video_container.innerHTML = '';
+
+                }
+            }, );
+      }, { once: true });
+      }, {once: true });
       
 }
 
-function playMusicVideo() {
-    const output =`
-    <img src="./img/music-page/film-grainy-texture.png" alt="" class="TV-filter-img"></img>
-    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/Hb8-3Rg7e9s?autoplay=1" allow="autoplay" frameborder="0"></iframe>
-  `;
-  music_page_video_container.innerHTML = output;
-}
+// function playMusicVideo() {
+//     const output =`
+//     <img src="./img/music-page/film-grainy-texture.png" alt="" class="TV-filter-img"></img>
+//     <iframe width="100%" height="100%" src="https://www.youtube.com/embed/Hb8-3Rg7e9s?autoplay=1" allow="autoplay" frameborder="0"></iframe>
+//   `;
+//   music_page_video_container.innerHTML = output;
+// }
 
 
 
@@ -356,3 +412,83 @@ function getRenderedSize(contains, cWidth, cHeight, width, height, pos){
   }
   
   
+
+  // @TO-DO  Mix the populateFilmMenu and populateMusicMenu into one function 
+// Do this after thinking how to layout the JS files and functions.
+async function populateMusicMenu(page) {
+    // We set the state of global page_number to the page we are populating. 
+    page_number = page;
+  
+    const res = await fetch('http://localhost:3000/api/songs', {
+        method: 'GET',
+        headers: {
+            'page-number': page_number
+        }
+    });
+    body = await res.json();
+    // This will the json boydo of the answer, with an array of 6 films and the total number of films.  
+  
+    // Now this needs to populate the menu.
+    // ALSO: CAREFUL TO NOT USE SAME ID FOR MORE THAN ONE ELEMENT. You made the mistake of 
+    // calling all the trailer link elements with same id, that can be dangerous and give problems to the browser too.
+    //DVD_list.innerHTML = ''; 
+    //saving this in global variable current_films so the info about the current films displayed in meny
+    // is available after this function has finished (particularly because the eventlistener
+    // will need it)
+  
+    current_songs = body.songs;
+    const total_songs = body['total-songs'];
+  
+    // Reset of the DVD list, so the list gets populated from scratch.
+    song_list.innerHTML = '';
+    current_songs.forEach((item, index) => {
+        song_list.innerHTML += `<li class="item">
+                                  <div class="item__main-img item__main-img--music-page">
+                                    <img src="${item.imglink}" alt="">
+                                  </div>
+                                  <div class="item__secondary-img item__secondary-img--music-page">
+                                    <img src="./img/film-page/action.png" id="music-video-link-${index}" alt="">
+                                  </div>
+                               </li>`
+    });
+  
+    // show the arrow controls that are necessary, depending on the number of page and whether there are 
+    // more songs to fetch. 
+    console.log(!music_page_controls.firstElementChild.classList.contains('hidden'));
+    if (page_number !== 0 && music_page_controls.firstElementChild.classList.contains('hidden')) 
+        music_page_controls.firstElementChild.classList.remove('hidden') 
+    if (page_number == 0 && !music_page_controls.firstElementChild.classList.contains('hidden')) 
+        music_page_controls.firstElementChild.classList.add('hidden') 
+    
+    console.log(music_page_controls.lastElementChild.classList.contains('hidden'));   
+    if ((total_songs > ((page_number + 1)*6)) && music_page_controls.lastElementChild.classList.contains('hidden')) 
+        music_page_controls.lastElementChild.classList.remove('hidden'); 
+    if (!(total_songs > ((page_number + 1)*6)) && !music_page_controls.lastElementChild.classList.contains('hidden')) 
+        music_page_controls.lastElementChild.classList.add('hidden');
+    
+    // Adding the click addEventListeners so the info of the songs appears when clicking on the image 
+    Array.prototype.slice.call(song_list.children).forEach((item, index) => item.firstElementChild.firstElementChild.addEventListener("click", () => {
+        console.log(current_songs[index]);
+        document.getElementById('song-title').innerHTML = `${current_songs[index].title}`;
+        document.getElementById('song-artist').innerHTML = `by ${current_songs[index].artist}`;
+        document.getElementById('song-country-year').innerHTML = `${current_songs[index].country}, ${current_songs[index].year}`;
+        document.getElementById('song-info').innerHTML = `${current_songs[index].info}`;
+        // Modificar esto para que solo desaparezca clicando la misma. Si clicas otra imagen, no. 
+        // Ya que lo único que tiene que pasar es que se cambie la información. 
+        song_info_container.classList.toggle('hidden');
+    })); 
+    
+    // Get all elements whose id start with "music-video-link" (created just now with ninnerHTML) and add event listeners.
+    document.querySelectorAll('[id^="music-video-link"]').forEach((item, index) => item.addEventListener("click", () => {
+        playVideo(current_songs[index].music_video, 'music');
+    })); 
+  
+    //Lastly, outside of this function, event listeners will be added to each populated image so when you click on it, the 
+    // info is displayed on the left. 
+    // ¿WHERE SHOULD I PUT THE EVENT LISTENERS? BECAUSE I AM POPULATING HERE... INVESTIGATE. WHEN YOU FINISH THAT, 
+    // MOST THINGS WILL BE DONE!! I GUESS THE EVENT SHOULD BE AS A ARRAY EVENT LISTENER ON TOP OF THIS PAGE, 
+    // THEN, THIS FUNCTION SHOULD PUPULATE THEM AND SET THEM TO DISPLAY TRUE, I GUESS WHILE THEY ARE IN DISPLAY OFF THE 
+    // CLICK WILL NOT WORK. OR REMEMBER HOW TO DEACTIVATE CLICKS SSO THIS FUNCTION WILL ACTIVATE THE CLICK ONLY 
+    // AFTER POPULATING IT. ALSO, MAKE THE IMAGES SMALLER AND ADD LEFT AND RIGHT ARROW LIKE IN THE BOOK EXAMPLE. 
+    // AND THE LEFT AND RIGHT ARROW SHOULD APPEAR ONLY WHEN NECESSARY. NO LEFT ARROW FOR PAGE 0. AH... SO MANY THINGS TO DO. 
+  }

@@ -50,13 +50,13 @@ router.post('/', [auth, [
         // See if the film exists, for that we use the title "processedtitle" created only for not allowing the user to 
         // upload movies to the database with same title because of different case or spaces. 
         processedtitle = (req.body.title).replace(/\s+/g, '').toLowerCase();
-        let film = await Film.findOne({ processedtitle });
+        let film = await Song.findOne({ processedtitle });
         if(film) {
             return res.status(400).json({errors: [{ msg: 'Movie with same title already in the database' }]});
         }
         // Upload
-        const uploaded_film = await newFilm.save();
-        res.json(uploaded_film);
+        const uploaded_song = await newSong.save();
+        res.json(uploaded_song);
     } catch (err) {
         console.error(err.message);
         // handling duplicate key error case (in the case they input a movie already on the database)
@@ -140,13 +140,26 @@ router.put('/:musician_id',[auth, [
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// @route    GET api/musicians
-// @desc     Get all musicians
+// @route    GET api/songs
+// @desc     Get songs and send a subset of six, depending on the number of menu page the client is at, the pages will start founting from 0.
+//           It also sends the total number of songs that are in the database. 
 // @access   Public
 router.get('/', async (req, res) => {
     try {
-        const musicians = await Musician.find().sort({ date: -1 });
-        res.json(musicians);
+        const number_songs = await Song.countDocuments();
+        const songs_to_skip = req.header('page-number')*6
+        console.log(req.header('page-number'));
+        songs = [];
+        if (number_songs > 6) {
+            songs = await Song.find().sort({ date: -1 }).skip(songs_to_skip).limit(6);
+        } else {
+            songs = await Song.find().sort({ date: -1 });
+        }
+        res.json({
+            'songs': songs,
+            'total-songs': number_songs
+        });
+
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');

@@ -27,19 +27,18 @@
             <h2 class="logo-3">Arte</h2>
         </div>
     </header>
-    <!-- Password popup when trying to submit a form. It needs the id of the form, so with JS that form attribute need to be change to the corresponding ID (film, book or music)-->
+    <!-- @ TO-DO: THE FORMS, THE PASSWORD POPUP, AND A FEWO THER THINGS, NEEED TO BE REFRACTORED TO BEM YET!!!! -->
+
+    <!-- Password popup when trying to submit a form. It needs the id of the form, 
+        so with JS that form attribute need to be change to the corresponding ID (film, book or music)-->
     <div class="password-popup" id="password-popup">
         <small>Error message</small>
         <div class="close-btn" id="password-popup-close-btn">
             <div class="btn-line"></div>
             <div class="btn-line"></div>
         </div>
-        <div>
-            <div class="form-control">
-                <label form = "film-form" for="password">Password</label>
-                <input form = "film-form" type="password" id="password" placeholder="Enter password">
-            </div>
-            <button form = "film-form" type="submit">Send</button>
+        <div id="popup-form">
+            <!-- To be populated in JS -->
         </div>
     </div>
 
@@ -89,39 +88,43 @@
                         <form action="" id="film-form" class="form show"> 
                             <div class="form-control">
                                 <label for="film-title">Title</label>
-                                <input type="text" id="film-title" placeholder="Enter film title">
+                                <input type="text" id="film-form-title" placeholder="Enter film title">
                                 <small>Error message</small>
                             </div>
                             <div class="form-control">
                                 <label for="film-director">Director</label>
-                                <input type="text" id="film-director" placeholder="Enter the name of the director">
+                                <input type="text" id="film-form-director" placeholder="Enter the name of the director">
                                 <small>Error message</small>
                             </div>
                             <div class="form-control">
                                 <label for="film-country">Country</label>
-                                <input type="text" id="film-country" placeholder="Enter the country of the director">
+                                <input type="text" id="film-form-country" placeholder="Enter the country of the director">
                                 <small>Error message</small>
                             </div>
                             <div class="form-control">
                                 <label for="film-year">Year</label>
-                                <input type="text" id="film-year" placeholder="Enter the year of the film">
+                                <input type="text" id="film-form-year" placeholder="Enter the year of the film">
                                 <small>Error message</small>
                             </div>
                             <div class="form-control">
                                 <label for="film-info">Info</label>
-                                <textarea id="film-info" class="text-area" name="film-info" rows="4" cols="31">Input info here.</textarea>
+                                <textarea id="film-info" class="text-area" name="film-form-info" rows="4" cols="31">Input info here.</textarea>
                                 <small>Error message</small>
                             </div>
                              <div class="form-control">
                                 <label for="film-trailer">Video link of the trailer (youtube)</label>
-                                <input type="text" id="film-trailer" placeholder="Enter youtube link of the trailer">
+                                <input type="text" id="film-form-trailer" placeholder="Enter youtube link of the trailer">
                                 <small>Error message</small>
                              </div>
                             <div class="form-control">
                              <label for="film-img-link">Link to image of the cover</label>
-                             <input type="text" id="film-img-link" placeholder="Enter link ending in an img extension.">
+                             <input type="text" id="film-form-img-link" placeholder="Enter link ending in an img extension.">
                              <small>Error message</small>
                           </div>
+                            <!-- This button actually is not the submit button, it is a normal button which opens a popup.
+                             That pupup will have the real submit button of the form, which will trigger a Sumit event
+                            that will be handled by JS. We could just use a normal button for that submit button too, 
+                            but I wanted to use Submit event for practicing -->
                             <button type ="button" class = "password-popup-btn">Submit</button>
                          </form>
 
@@ -129,81 +132,81 @@
                           <form action="" id="book-form" class="form"> 
                             <div class="form-control">
                                 <label for="book-title">Title</label>
-                                <input type="text" id="book-title" placeholder="Enter book title">
+                                <input type="text" id="book-form-title" placeholder="Enter book title">
                                 <small>Error message</small>
                             </div>
                             <div class="form-control">
                                 <label for="book-author">Author</label>
-                                <input type="text" id="book-author" placeholder="Enter the name of the author">
+                                <input type="text" id="book-form-author" placeholder="Enter the name of the author">
                                 <small>Error message</small>
                             </div>
                             <div class="form-control">
                                 <label for="book-country">Country</label>
-                                <input type="text" id="book-country" placeholder="Enter the country of the author">
+                                <input type="text" id="book-form-country" placeholder="Enter the country of the author">
                                 <small>Error message</small>
                             </div>
                             <div class="form-control">
                                 <label for="book-year">Year</label>
-                                <input type="text" id="book-year" placeholder="Enter the year of the book">
+                                <input type="text" id="book-form-year" placeholder="Enter the year of the book">
                                 <small>Error message</small>
                             </div>
                             <div class="form-control">
                                 <label for="book-info">Info</label>
-                                <textarea id="book-info" class="text-area" name="book-info" rows="4" cols="31">Input info here.</textarea>
+                                <textarea id="book--form-info" class="text-area" name="book-info" rows="4" cols="31">Input info here.</textarea>
                                 <small>Error message</small>
                             </div>
                             <div class="form-control">
-                                <div class="book-link-add-btn" id="book-link-add-btn">
+                                <div class="book-link-add-btn" id="book-form-link-add-btn">
                                    <div class="btn-line"></div>
                                    <div class="btn-line"></div>
                                 </div>
                                 <label for="book-quote-1">Quote</label>
-                                <textarea id="book-quote-1" class="text-area" name="book-quote-1" rows="4" cols="31">Input info here.</textarea>
+                                <textarea id="book-form-quote-1" class="text-area" name="book-quote-1" rows="4" cols="31">Input info here.</textarea>
                                 <small>Error message</small>
                             </div>
                             <div class="form-control">
                              <label for="book-img-link">Link to image of the cover</label>
-                             <input type="text" id="book-img-link" placeholder="Enter link ending in an img extension.">
+                             <input type="text" id="book-form-img-link" placeholder="Enter link ending in an img extension.">
                              <small>Error message</small>
                             </div>
                             <button type ="button" class = "password-popup-btn">Submit</button>
                          </form>
 
                         <!-- music form -->
-                        <form action="" id="song-form" class="form show"> 
+                        <form action="" id="song-form" class="form"> 
                             <div class="form-control">
                                 <label for="song-title">Title</label>
-                                <input type="text" id="song-title" placeholder="Enter song title">
+                                <input type="text" id="song-form-title" placeholder="Enter song title">
                                 <small>Error message</small>
                             </div>
                             <div class="form-control">
-                                <label for="song-artist">Director</label>
-                                <input type="text" id="song-artist" placeholder="Enter the name of the artist or band">
+                                <label for="song-artist">Artist or band</label>
+                                <input type="text" id="song-form-artist" placeholder="Enter the name of the artist or band">
                                 <small>Error message</small>
                             </div>
                             <div class="form-control">
                                 <label for="song-country">Country</label>
-                                <input type="text" id="song-country" placeholder="Enter the country of the artist or band">
+                                <input type="text" id="song-form-country" placeholder="Enter the country of the artist or band">
                                 <small>Error message</small>
                             </div>
                             <div class="form-control">
                                 <label for="song-year">Year</label>
-                                <input type="text" id="song-year" placeholder="Enter the year of the song">
+                                <input type="text" id="song-form-year" placeholder="Enter the year of the song">
                                 <small>Error message</small>
                             </div>
                             <div class="form-control">
                                 <label for="song-info">Info</label>
-                                <textarea id="song-info" class="text-area" name="song-info" rows="4" cols="31">Input info here.</textarea>
+                                <textarea id="song-form-info" class="text-area" name="song-info" rows="4" cols="31">Input info here.</textarea>
                                 <small>Error message</small>
                             </div>
                              <div class="form-control">
                                 <label for="song-video">Video link of the song (youtube)</label>
-                                <input type="text" id="song-video" placeholder="Enter youtube link of the song">
+                                <input type="text" id="song-form-video" placeholder="Enter youtube link of the song">
                                 <small>Error message</small>
                              </div>
                             <div class="form-control">
                              <label for="song-img-link">Link to image related to the song (cover of the album, etc)</label>
-                             <input type="text" id="song-img-link" placeholder="Enter link ending in an img extension.">
+                             <input type="text" id="song-form-img-link" placeholder="Enter link ending in an img extension.">
                              <small>Error message</small>
                           </div>
                             <button type ="button" class = "password-popup-btn">Submit</button>
@@ -234,13 +237,13 @@
                     <div class="item-info item-info--film-page hidden" id="DVD-info-container">
                         <div class="item-info-container">
                             <div class="item-info-container__primary-info">
-                                <h1 id="title"></h1>
-                                <h2 id="director"></h2>
-                                <h3 id="country-year"></h3>
+                                <h1 id="film-title"></h1>
+                                <h2 id="film-director"></h2>
+                                <h3 id="film-country-year"></h3>
                             </div>
                             <div class="item-info-container__secondary-info">
                                 <h3>Info</h3>
-                                <p id="info"></p>
+                                <p id="film-info"></p>
                             </div>
                         </div>
                     </div>
@@ -315,8 +318,8 @@
                 <source src="./sound/music-page/music-page-transition-melody.wav" />  <!-- fallback if no mp3 support in browser -->
               </audio>
             
-            <div class="music-page-ghost-img-container">
-                <div class="ghost-img" id="ghost-img">
+            <div class="music-page-ghost-img-container" id="ghost-img-container">
+                <div class="ghost-img" >
                     <!-- there are 60 ghost-elements-->
                     <div class="ghost-img__ghost-element ghost-img__ghost-element--music-page"></div>
                     <div class="ghost-img__ghost-element ghost-img__ghost-element--music-page"></div>
@@ -387,18 +390,21 @@
                 <img src="./img/music-page/film-grainy-texture.png" alt="" class="TV-filter-img"></img>
             </div>
             
+            <!-- Be REALLY careful forn ot having any ID repeated, nor here not in the HTML populated by JS. It is really 
+            dangerous and it can give many problems when selectingElements by ID when there is any repeated ID.
+            So, in general, do not be afraid to use nice long specific ID's -->
             <nav class="overlay-block overlay-block--music-page">
                 <div class="left-side left-side--music-page" id="music-page-nav-left">
                     <div class="item-info item-info--music-page hidden" id="song-info-container">
                         <div class="item-info-container">
                             <div class="item-info-container__primary-info">
-                                <h1 id="title"></h1>
-                                <h2 id="director"></h2>
-                                <h3 id="country-year"></h3>
+                                <h1 id="song-title"></h1>
+                                <h2 id="song-artist"></h2>
+                                <h3 id="song-country-year"></h3>
                             </div>
                             <div class="item-info-container__secondary-info">
                                 <h3>Info</h3>
-                                <p id="info"></p>
+                                <p id="song-info"></p>
                             </div>
                         </div>
                     </div>

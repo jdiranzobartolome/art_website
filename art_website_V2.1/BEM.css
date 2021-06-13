@@ -37,14 +37,6 @@
   display: grid;
   grid-template-rows: 1fr;
   grid-template-columns: repeat(60, 1fr);
-  opacity: 1;
-  transition-property: opacity;
-  transition-duration: 3s;
-  transition-delay: 1s;
-}
-
-.ghost-img.hide {
-  opacity: 0;
 }
 
 .ghost-img__ghost-element {

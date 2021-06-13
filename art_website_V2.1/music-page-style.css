@@ -26,7 +26,7 @@
   background: #fff;
   z-index: 100;
   opacity: 0;
-  transition: opacity 0.5s ease;
+  transition: opacity 4s ease;
   /* when the youtube video starts, pointer-events will be allowed again for the screen on javascript */
   pointer-events: none;
   overflow: hidden;
@@ -75,8 +75,8 @@
 }
 
 .item__main-img--music-page img {
-  width: 110px;
-  height: 160px;
+  width: 135px;
+  height: 135px;
 }
 
 .item__secondary-img--music-page img {
@@ -92,6 +92,14 @@
   height: 300px;
   /* high z-index so the ghost image can be seen over anything */
   z-index: 1000;
+  opacity: 1;
+  transition-property: opacity;
+  transition-duration: 1s;
+  transition-delay: 0.5s;
+}
+
+.music-page-ghost-img-container.hide {
+  opacity: 0;
 }
 
 .ghost-img__ghost-element--music-page {
