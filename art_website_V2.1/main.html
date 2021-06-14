@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="film-page-style.css">
     <link rel="stylesheet" href="music-page-style.css">
     <link rel="stylesheet" href="BEM.css">
+    <!-- JQuery CDN from google server to use turn.js plugin (plugin called with the rest of the js scripts at the bottom) -->
     <title>Baúl de Arte</title>
 </head>
 
@@ -283,19 +284,26 @@
                        <img src="./img/book-page/arrow.png" alt="arrow-right" class="arrow-right">
                    </div>
                    <div class="bookshelf__shelf">
-                       <div class="row">
-                           <div class="loc">
-                               <div class="book"></div>
-                               <div class="book"></div>
-                               <div class="book"></div>
-                           </div>
+                       <div class="bookshelf__row bookshelf__row--upper">
+                            <div class="flip-book-container">
+                                <div id="flipbook">
+                                    <div class="hard" style="background-color: aliceblue;"> Turn.js </div>
+                                    <div class="hard" style="background-color: aliceblue;"></div>
+                                    <div style="background-color: aliceblue;"> Page 1 </div>
+                                    <div style="background-color: aliceblue;"> Page 2 </div>
+                                    <div style="background-color: aliceblue;"> Page 3 </div>
+                                    <div style="background-color: aliceblue;"> Page 4 </div>
+                                    <div class="hard"></div>
+                                    <div class="hard"></div>
+                                </div>
+                            </div>
+                            <div class="flip-book-container"></div>
+                            <div class="flip-book-container"></div>
                        </div>
-                       <div class="row">
-                        <div class="loc">
-                            <div class="book"></div>
-                            <div class="book"></div>
-                            <div class="book"></div>
-                        </div>
+                       <div class="bookshelf__row bookshelf__row--bottom">
+                            <div class="flip-book-container"></div>
+                            <div class="flip-book-container"></div>
+                            <div class="flip-book-container"></div>
                     </div>
                 </div>   
                 </div>
@@ -429,14 +437,41 @@
         </div>  
     </section>
 
-    
-
-
-    
     <script src="main-script.js"></script>
     <script src="menu-page-script.js"></script>
     <script src="book-page-script.js"></script>
     <script src="film-page-script.js"></script>
     <script src="music-page-script.js"></script>
+
+<!--     
+<script type="text/javascript">
+
+	$(window).ready(function() {
+		$('#flipbook').turn({
+							display: 'single',
+							acceleration: true,
+							gradients: !$.isTouch,
+							elevation:50,
+							when: {
+								turned: function(e, page) {
+									/*console.log('Current view: ', $(this).turn('view'));*/
+								}
+							}
+						});
+	});
+	
+	
+	$(window).bind('keydown', function(e){
+		
+		if (e.keyCode==37)
+			$('#flipbook').turn('previous');
+		else if (e.keyCode==39)
+			$('#flipbook').turn('next');
+			
+	});
+
+</script> -->
+    
+
 </body>
 </html>

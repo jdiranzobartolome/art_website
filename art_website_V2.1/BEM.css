@@ -1,3 +1,7 @@
+/* @ TO-DO */
+/* CREATE ALSO A MENU-PAGE-CSS AND THE GENERAL GLOBAL CSS LEAVE IT IN A GLOBAL.CSS, 
+OR SOMETHING LIKE THAT. SO EVERYTHING IS SEPARATED NICELY. DO NOT HAVE THE MAIN-CSS WITH GENERAL CSS AND MENU-PAGE CSS. */
+
 /* block class for the page document and content container */
 .page {
   position: absolute;
@@ -493,87 +497,3 @@ Until you refractor the code with BEM. Then let's think */
 }
 
 /* END OF ITEM INFO BLOCK */
-
-/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
-/* BOOK PAGE PARTICULARS */
-/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
-
-/*  Book page  (I THINK BETTER DOING IT BY GENERAL BLOCKS, AND THEN BY PAGE */
-.page--book-page {
-  /* DUDA: is this position absolute really needed?  */
-  position: absolute;
-  top: -100vh;
-  left: 0;
-}
-
-.bg-vid--book-page {
-  opacity: 0.65;
-  /* Mirroring the video */
-  transform: scaleX(-1);
-}
-
-.bookshelf__overlayer {
-  position: absolute;
-  top: 60px;
-  left: 0;
-  width: 100%;
-  height: 500px;
-  opacity: 0.7;
-}
-
-.bookshelf .overlayer {
-  position: absolute;
-  top: 60px;
-  left: 0;
-  width: 100%;
-  height: 500px;
-  opacity: 0.7;
-}
-
-.bookshelf__overlayer img {
-  width: 100%;
-  height: 100%;
-  border-radius: 30px;
-}
-
-.bookshelf__controls {
-  position: absolute;
-  top: 510px;
-  left: 0;
-  width: 100%;
-  height: 70px;
-  opacity: 1;
-  background-color: #111;
-  border-bottom-left-radius: 30px;
-  border-bottom-right-radius: 30px;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.bookshelf__controls img:first-child {
-  padding-right: 20px;
-  height: 40px;
-  transform: scaleX(-1);
-}
-
-.bookshelf__controls img:last-child {
-  height: 40px;
-  padding-left: 20px;
-}
-
-.bookshelf__shelf {
-  /* defining the width and height overrides the flex:1, so now the flex item from the right
-  will ocupy more space than the left as the screen becomes smaller. It is okay, though, 
-  since it is what we want */
-  position: absolute;
-  top: 70px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 426px;
-  height: 440px;
-  background: url(./img/book-page/bookshelf.gif);
-  background-size: contain;
-  z-index: 1;
-}

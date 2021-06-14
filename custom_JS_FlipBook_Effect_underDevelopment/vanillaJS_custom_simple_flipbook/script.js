@@ -1,4 +1,3 @@
-
 const flip_book = document.getElementById('flipbook');
 const flipper = document.getElementById('flipper');
 
@@ -116,4 +115,3 @@ function interactWithBook() {
         front_page.style.cssText +='box-shadow', cc + 'px 0 ' + cc + 'px rgba(0,0,0,0.7), 2px 0 4px rgba(0,0,0,0.5), -2px 0 4px rgba(0,0,0,0.5), -20px 0 40px rgba(0,0,0,0.2), 4px 0 10px rgba(0,0,0,0.1) inset, -2px 0 2px rgba(0,0,0,0.2) inset, ' + dd + 'px 0 ' + ff + 'px rgba(0,0,0,' + gg + ') inset';
     }
 }
-
