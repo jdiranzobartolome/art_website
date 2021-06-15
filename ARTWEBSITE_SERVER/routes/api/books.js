@@ -5,7 +5,6 @@ const { check, validationResult} = require('express-validator/check');
 
 const Book = require('../../models/Books');
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // @route    POST api/books/
 // @desc     Upload a book
@@ -14,7 +13,7 @@ router.post('/', [auth, [
     check('title', 'Title field is required')
     .not()
     .isEmpty(),
-    check('author', 'Director field is required')
+    check('author', 'Author field is required')
     .not()
     .isEmpty(),
     check('country', 'Country field is required')
@@ -38,17 +37,16 @@ router.post('/', [auth, [
     const newBook = new Book({
         title: req.body.title,
         processedtitle: (req.body.title).replace(/\s+/g, '').toLowerCase(),
-        author: req.body.director,
+        author: req.body.author,
         country: req.body.country,
         year: req.body.year,
         info: req.body.info,
-        tags: req.body.tags ? req.body.tags.split(';').map(tag => tag.trim()) : "",
         quotes: req.body.quotes,
-        imglink: req.body.imglink,
+        imglink: req.body.imglink
     });
 
     try {
-        // See if the film exists, for that we use the title "processedtitle" created only for not allowing the user to 
+        // See if the book exists, for that we use the title "processedtitle" created only for not allowing the user to 
         // upload movies to the database with same title because of different case or spaces. 
         processedtitle = (req.body.title).replace(/\s+/g, '').toLowerCase();
         let book = await Book.findOne({ processedtitle });
@@ -58,7 +56,6 @@ router.post('/', [auth, [
         // Upload
         const uploaded_book = await newBook.save();
         res.json(uploaded_book);
-
     } catch (err) {
         console.error(err.message);
         // handling duplicate key error case (in the case they input a movie already on the database)
@@ -150,12 +147,25 @@ router.put('/:book_id',[auth, [
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // @route    GET api/books
-// @desc     Get all books
+// @desc     Get books and send a subset of six, depending on the number of menu page the client is at, the pages will start founting from 0.
+//           It also sends the total number of books that are in the database. 
 // @access   Public
 router.get('/', async (req, res) => {
     try {
-        const books = await Book.find().sort({ date: -1 });
-        res.json(books);
+        const number_books = await Book.countDocuments();
+        const books_to_skip = req.header('page-number')*6
+        console.log(req.header('page-number'));
+        let books = [];
+        if (number_books > 6) {
+            books = await Book.find().sort({ date: -1 }).skip(books_to_skip).limit(6);
+        } else {
+            books = await Book.find().sort({ date: -1 });
+        }
+        res.json({
+            'books': books,
+            'total-books': number_books
+        });
+
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');

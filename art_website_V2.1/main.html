@@ -21,7 +21,7 @@
 
 <body>
 <!-- Header -->
-    <header id="header">
+    <header class="header" id="header">
         <div class="logo">
             <h2 class="logo-1">Baúl</h2>
             <h3 class="logo-2">del</h3>
@@ -272,6 +272,53 @@
 <!-- Book Page -->  
     <section class="page page--book-page">
         <div class="page-content">
+            <div class="flipbook-container" id="flipbook-container">
+                <div class="flipbook" id="flipbook">
+                    <div class="flipbook__flipper" id="flipper">
+                         <!-- This will be populated with as many pages as needed in Javascript -->
+                        <div class="flipbook__page flipbook_page--left" id="page-1">
+                            <div class="content">
+                                <h1>Page 1</h1>
+                            </div>
+                        </div>
+                        <div class="flipbook__page flipbook__page--right" id="page-2">
+                             <div class="content">
+                                <h1>Page 2</h1>
+                             </div>
+                        </div>
+                        <div class="flipbook__page flipbook__page--right" id="page-3">
+                            <div class="content">
+                                <h1>Page 3</h1>
+                            </div>
+                        </div>
+                        <div class="flipbook__page flipbook__page--right" id="page-4">
+                             <div class="content">
+                                <h1>Page 4</h1>
+                             </div>
+                        </div>
+                        <div class="flipbook__page flipbook__page--right" id="page-5">
+                            <div class="content">
+                                <h1>Page 5</h1>
+                            </div>
+                        </div>
+                        <div class="flipbook__page flipbook__page--right" id="page-6">
+                             <div class="content">
+                                <h1>Page 6</h1>
+                             </div>
+                        </div>
+                        <div class="flipbook__page flipbook__page--right" id="page-7">
+                            <div class="content">
+                                <h1>Page 7</h1>
+                            </div>
+                        </div>
+                        <div class="flipbook__page flipbook__page--right" id="page-8">
+                             <div class="content">
+                                <h1>Page 8</h1>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <video class="bg-vid bg-vid--book-page" src="./video/book-page/main-video.webm" muted loop autoplay id="book-page-video"></video>
                 <div class="left-side"></div>
                 <div class="right-side">
@@ -279,31 +326,20 @@
                    <div class="bookshelf__overlayer">
                       <img src="./img/book-page/white_wall.png" alt="white_brick_wall_image"> 
                    </div>
-                   <div class="bookshelf__controls">
+                   <div class="bookshelf__controls" id="book-page-controls">
                        <img src="./img/book-page/arrow.png" alt="arrow-left" class="arrow-left">
                        <img src="./img/book-page/arrow.png" alt="arrow-right" class="arrow-right">
                    </div>
                    <div class="bookshelf__shelf">
                        <div class="bookshelf__row bookshelf__row--upper">
-                            <div class="flip-book-container">
-                                <div id="flipbook">
-                                    <div class="hard" style="background-color: aliceblue;"> Turn.js </div>
-                                    <div class="hard" style="background-color: aliceblue;"></div>
-                                    <div style="background-color: aliceblue;"> Page 1 </div>
-                                    <div style="background-color: aliceblue;"> Page 2 </div>
-                                    <div style="background-color: aliceblue;"> Page 3 </div>
-                                    <div style="background-color: aliceblue;"> Page 4 </div>
-                                    <div class="hard"></div>
-                                    <div class="hard"></div>
-                                </div>
-                            </div>
-                            <div class="flip-book-container"></div>
-                            <div class="flip-book-container"></div>
+                            <div class="book" id="book-1"></div>
+                            <div class="book"id="book-2"></div>
+                            <div class="book" id="book-3"></div>
                        </div>
                        <div class="bookshelf__row bookshelf__row--bottom">
-                            <div class="flip-book-container"></div>
-                            <div class="flip-book-container"></div>
-                            <div class="flip-book-container"></div>
+                            <div class="book" id="book-4"></div>
+                            <div class="book" id="book-5"></div>
+                            <div class="book" id="book-6"></div>
                     </div>
                 </div>   
                 </div>
@@ -442,36 +478,6 @@
     <script src="book-page-script.js"></script>
     <script src="film-page-script.js"></script>
     <script src="music-page-script.js"></script>
-
-<!--     
-<script type="text/javascript">
-
-	$(window).ready(function() {
-		$('#flipbook').turn({
-							display: 'single',
-							acceleration: true,
-							gradients: !$.isTouch,
-							elevation:50,
-							when: {
-								turned: function(e, page) {
-									/*console.log('Current view: ', $(this).turn('view'));*/
-								}
-							}
-						});
-	});
-	
-	
-	$(window).bind('keydown', function(e){
-		
-		if (e.keyCode==37)
-			$('#flipbook').turn('previous');
-		else if (e.keyCode==39)
-			$('#flipbook').turn('next');
-			
-	});
-
-</script> -->
-    
 
 </body>
 </html>

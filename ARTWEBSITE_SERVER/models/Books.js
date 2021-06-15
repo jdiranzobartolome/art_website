@@ -32,9 +32,6 @@ const BookSchema = new mongoose.Schema({
         type: String,
         // We make the info not required
     },
-    tags: {
-        type: [String],
-    },
     quotes: {
         type: [String],
     }, 

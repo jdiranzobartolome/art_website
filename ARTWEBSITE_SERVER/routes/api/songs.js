@@ -149,7 +149,7 @@ router.get('/', async (req, res) => {
         const number_songs = await Song.countDocuments();
         const songs_to_skip = req.header('page-number')*6
         console.log(req.header('page-number'));
-        songs = [];
+        let songs = [];
         if (number_songs > 6) {
             songs = await Song.find().sort({ date: -1 }).skip(songs_to_skip).limit(6);
         } else {

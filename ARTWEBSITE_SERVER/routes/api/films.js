@@ -52,7 +52,7 @@ router.post('/', [auth, [
         year: req.body.year,
         info: req.body.info,
         trailer: req.body.trailer,
-        imglink: req.body.imglink,
+        imglink: req.body.imglink
     });
 
     try {
@@ -167,7 +167,7 @@ router.get('/', async (req, res) => {
         const number_films = await Film.countDocuments();
         const films_to_skip = req.header('page-number')*6
         console.log(req.header('page-number'));
-        films = [];
+        let films = [];
         if (number_films > 6) {
             films = await Film.find().sort({ date: -1 }).skip(films_to_skip).limit(6);
         } else {

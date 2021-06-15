@@ -96,12 +96,12 @@ art_form_selectors.forEach((item, index) =>
 
 book_form_link_add_btn.addEventListener("click", () => {
   var link_number =
-    book_form_link_add_btn.parentElement.getElementsByTagName("input").length + 1;
+    book_form_link_add_btn.parentElement.getElementsByTagName("textarea").length + 1;
 
   book_form_link_add_btn.parentElement.lastElementChild.insertAdjacentHTML(
     "afterend",
-    `<label for="book-quote-${link_number}">Quote</label>
-    <textarea id="book-quote-${link_number}" class="text-area" name="book-quote" rows="4" cols="31">Input quote here.</textarea>
+    `<label for="book-quote-${link_number}">Quote ${link_number}</label>
+    <textarea id="book-form-quote-${link_number}" class="text-area" name="book-quote" rows="4" cols="31">Input quote here.</textarea>
     <small>Error message</small>`
   );
 });
@@ -189,6 +189,9 @@ function changeMenuPage(index) {
     document.body.style.transform = "translate(0,100vh)";
     header.style.transition = "transform 3s ease";
     header.style.transform = "translate(0,-100vh)";
+
+    // Populate the book menu with the initial 6 films from menu-page 1. This function is defined in film-page-script.js
+    populateBookMenu(0);
 
     setTimeout(() => {
       menu_page_links[index].addEventListener(
@@ -302,12 +305,73 @@ async function uploadArtwork(index, e) {
       small.classList.toggle("visible");
       var transitionEnd = transitionEndEventName();
       small.addEventListener(transitionEnd, function _listener() {
-        small.removeEventListener(transitionEnd, _listener);
-        small.classList.toggle("visible");
+      small.removeEventListener(transitionEnd, _listener);
+      small.classList.toggle("visible");
       });
     }
   } else if (index=== 1) {
-    // COPY HERE LATER THE ONE FROM FILMS BUT THE OLD ONE, SINCE THERE WAS A USEFUL REGEX FOR PARSING THE QUOTES OF BOOKS
+      let title = document.getElementById("book-form-title").value;
+      let author = document.getElementById("book-form-author").value;
+      let country = document.getElementById("book-form-country").value;
+      let year = document.getElementById("book-form-year").value;
+      let info = document.getElementById("book-form-info").value;
+      let imglink = document.getElementById("book-form-img-link").value;
+      let password = document.getElementById("password").value;
+      let quotes = [];
+
+      // Really nice regex style query. I found it here: 
+      // https://dev.to/jcandan/use-javascript-regex-to-find-all-ids-that-contain-a-string-and-copy-the-text-to-the-clipboard-51gb
+      Array.from(menu_page_art_forms[index].querySelectorAll('[id^="book-form-quote-"]'))
+      .forEach(item => {
+         quotes.push(item.value);
+      });
+      
+      const res = await fetch('http://localhost:3000/api/books', {
+          method: 'POST',
+          headers: {
+              'Accept': 'application/json, text/plain, */*',
+              'Content-type': 'application/json',
+                password
+          },
+          body: JSON.stringify({
+            title,
+            author,
+            country,
+            year,
+            info,
+            quotes,
+            imglink,
+          })
+      });
+
+      const data = await res.json();
+      console.log(data);
+      const small = password_popup.querySelector('small');
+      password_popup.classList.remove('error');
+      password_popup.classList.remove('success');
+
+      // if there is an error
+      if (res.status != 200) {
+        small.innerText = data.errors[0].msg;
+        password_popup.classList.add('error');
+        small.classList.toggle('visible');
+        var transitionEnd = transitionEndEventName();
+        small.addEventListener(transitionEnd, function _listener() {
+            small.removeEventListener(transitionEnd, _listener);
+            small.classList.toggle('visible');
+        });
+
+      // if the upload is succesful  
+      } else {
+        small.innerText = "artwork uploaded to the database";
+        password_popup.classList.add('success');
+        small.classList.toggle('visible');
+        var transitionEnd = transitionEndEventName();
+        small.addEventListener(transitionEnd, function _listener() {
+            small.removeEventListener(transitionEnd, _listener);
+            small.classList.toggle('visible');
+          });
+      }
   } else if (index===2) {
     let title = document.getElementById("song-form-title").value;
       let artist = document.getElementById("song-form-artist").value;
