@@ -197,13 +197,11 @@ async function populateFilmMenu(page) {
 
     // show the arrow controls that are necessary, depending on the number of page and wether there are 
     // more films to fetch. 
-    console.log(!film_page_controls.firstElementChild.classList.contains('hidden'));
     if (page_number !== 0 && film_page_controls.firstElementChild.classList.contains('hidden')) 
         film_page_controls.firstElementChild.classList.remove('hidden') 
     if (page_number == 0 && !film_page_controls.firstElementChild.classList.contains('hidden')) 
         film_page_controls.firstElementChild.classList.add('hidden') 
-    
-    console.log(film_page_controls.lastElementChild.classList.contains('hidden'));   
+     
     if ((total_films > ((page_number + 1)*6)) && film_page_controls.lastElementChild.classList.contains('hidden')) 
         film_page_controls.lastElementChild.classList.remove('hidden'); 
     if (!(total_films > ((page_number + 1)*6)) && !film_page_controls.lastElementChild.classList.contains('hidden')) 

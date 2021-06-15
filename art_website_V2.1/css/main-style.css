@@ -29,7 +29,75 @@ body {
   /* transition: transform 3s ease;*/
   transition: transform 7s ease;
   overflow: hidden;
+
+  /* Making the body and, as a result, everything inside, not draggable.
+  Mainly because of some elements that were being accidentally dragged while
+  flipping the book's pages. Could avoid only those elements to not be dragged. But
+  I preffer to set it globally */
+  -webkit-user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 }
+
+/*---------- BEGINNING OF CANVAS CSS ---------*/
+/*  THIS IS JUST A PLACE ON TOP OF THE BODY, RIGHT AT THE ORIGIN, WHERE THE PAGES ARE 
+MOVED TO CREATE A SNAPSHOT OF THEM. THE CSS HERE IS A COPY OF THE ONE FROM THE ORIGINAL HTML PAGES
+BUT HERE, IN THE CANVAS, TO TAKE THE SNAPSHOT. */
+
+.canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 355px;
+  height: 560px;
+  /* z-index: 99999999; */
+  background: #fff;
+}
+
+.canvas .content {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  width: 100%;
+  height: auto;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  padding: 35px;
+  justify-content: center;
+}
+
+.canvas h1 {
+  font-size: 40px;
+  color: #000;
+}
+
+.canvas h2 {
+  font-size: 30px;
+  color: #000;
+}
+
+.canvas h3 {
+  font-size: 23px;
+  color: #000;
+}
+
+.canvas h4 {
+  font-size: 15px;
+  color: #000;
+}
+
+.canvas p {
+  font-size: 16px;
+  text-align: justify;
+  text-justify: inter-word;
+  color: #000;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ------------- END CANVAS ------------------ */
 
 header {
   /* positioning fix when the parent has a transform (like in this case the body, that you move for 
