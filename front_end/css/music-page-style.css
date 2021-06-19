@@ -49,23 +49,13 @@
 
 .right-side--music-page {
   background: rgba(0, 0, 0, 0.7);
-  /* Translate is really useful for making objets look like
-    their are comming form somewhere. With translate3D, you kind
-    of play with their original (html) cordinate position */
   transform: translate(0, -100%);
-  /* OJO!!! en transition you need to write tranform. The property is 
-    transform. Trnaslate is one of the variables of the property */
   transition: transform 3s ease;
 }
 
 .left-side--music-page {
   background: rgba(255, 255, 255, 0.5);
-  /* Translate is really useful for making objets look like
-    their are comming form somewhere. With translate3D, you kind
-    of play with their original (html) cordinate position */
   transform: translate(0, 100%);
-  /* OJO!!! en transition you need to write tranform. The property is 
-    transform. Trnaslate is one of the variables of the property */
   transition: transform 3s ease;
 }
 

@@ -1,7 +1,3 @@
-/* import of the different css files */
-@import "menu-page-style.css";
-@import "book-page-style.css";
-
 /* main global css rules*/
 * {
   box-sizing: border-box;
@@ -10,15 +6,6 @@
   font-family: Parisienne, "Poppins", sans-serif;
   color: #fff;
 }
-
-/* VITAL!!! THIS IS NEEDED FOR NOT ALLOWING SCROLLING IN PHONES, OTHERWISE IT DOES NOT WORK, SOMEHOW.
-HOWEVER, WHEN I ADD THIS, THE PHONE DOES NOT RENDER ANYTHING OUTSIDE OF THE VIEW...... */
-/*NO NECESARIO PARA NADA SI SE AÑADI LA PROPIEDAD MINIMUM-SCALE AL META DATA DEL HTML. MIRA EL INICIO 
-DEL HTML PARA MAS INFORMACION. */
-/* body,
-html {
-  overflow-x: hidden;
-} */
 
 body {
   filter: contrast(120%);

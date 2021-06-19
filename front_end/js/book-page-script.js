@@ -1,3 +1,13 @@
+///////////
+// Imports
+///////////
+import { transitionEndEventName, playVideo } from "./main-script.js";
+import { ChangeMenuVideo } from "./menu-page-script.js";
+
+
+///////////////////////////
+// Module global variables
+///////////////////////////
 
 const flipbook_container = document.getElementById('flipbook-container');
 const flip_book = document.getElementById('flipbook');
@@ -11,34 +21,78 @@ var front_page = {};
 var current_book_page = 1;
 var book_max_pages = 0;
 var flipping_rest = false;
+var book_page_number = 0;
 
 var mouse_held = false;
 var thisX = 0;
 var right_flip_init = false;
 var left_flip_init = false;
 
+///////////////////
+// Event Listeners
+///////////////////
 // event listeners to know whether the mouse is being held or not. 
 document.body.addEventListener('mousedown', () => mouse_held = true );
 document.body.addEventListener('mouseup', () => mouse_held = false );
+
+// event listener for the flipbook
 flipper.addEventListener('mousemove', flipper_listener);
+
+
+/////////////
+// Functions
+////////////
+export async function populateBookMenu(page) {
+    // We set the state of global page_number to the page we are populating. 
+    book_page_number = page;
+
+    const res = await fetch('http://localhost:3000/api/books', {
+        method: 'GET',
+        headers: {
+            'page-number': book_page_number
+        }
+    });
+    let body = await res.json();
+
+    let current_books = body.books;
+    const total_books = body['total-books'];
+
+    // Resetting the book shelf
+    upper_shelf.innerHTML = '';
+    bottom_shelf.innerHTML = '';
+    current_books.forEach((item, index) => {
+        if (index <= 2) {
+            upper_shelf.innerHTML += `<div class="book" id="shelf-book-${index + 1}"><img src="${item.imglink}" alt=""></div>`;
+        } else {
+            bottom_shelf.innerHTML += `<div class="book" id="shelf-book-${index + 1}"><img src="${item.imglink}" alt=""></div>`;
+        }
+    });
+
+    // show the arrow controls that are necessary, depending on the number of page and wether there are 
+    // more books to fetch. 
+    if (book_page_number !== 0 && book_page_controls.firstElementChild.classList.contains('hidden')) 
+        book_page_controls.firstElementChild.classList.remove('hidden') 
+    if (book_page_number == 0 && !book_page_controls.firstElementChild.classList.contains('hidden')) 
+        book_page_controls.firstElementChild.classList.add('hidden') 
+     
+    if ((total_books > ((book_page_number + 1)*6)) && book_page_controls.lastElementChild.classList.contains('hidden')) 
+        book_page_controls.lastElementChild.classList.remove('hidden'); 
+    if (!(total_books > ((book_page_number + 1)*6)) && !book_page_controls.lastElementChild.classList.contains('hidden')) 
+        book_page_controls.lastElementChild.classList.add('hidden');
+   
+    // Get all elements whose id start with "book-" and add event listeners.
+    document.querySelectorAll('[id^="shelf-book-"]').forEach((item, index) => item.addEventListener("click", async () => {
+        await renderBook(current_books[index]);
+        setTimeout(() => flipbook_container.style.visibility = 'visible', 3000);
+    })); 
+
+}
 
 function flipper_listener(e) {
 
-    //Poner todo esto dentro de un if (mousebuttonpressed
-    //Getting the X coordinate inside the flipper element
-
-    // finding out the X coordinate of the cursor whithin the flipper (with a max value of the width of the flipper
-    // when the cursor is at the utmost right, and 0 when the cursor in at the left of the flipper). 
-    // For that I use the value of "left" (offsetLeft), but taking into account the translation of -50%
-    // given to the container to center it.
+    // getting x coordinate relative to flipper
     thisX = e.pageX - (flipbook_container.offsetLeft - flipbook_container.clientWidth/2) - flipper.offsetLeft
-    
-
-    // If flipping completed: Finishing the action and making the page automatically
-    // finish the flipping by itself.
-    //But, if the flipping has been initiated but the mouse is not held (and we did not reach the left side
-    // of the book, which is the previous if logic).
-    // Otherwise, if the flipping going on, the page needs to keep moving accordingly.  
+     
     if ((right_flip_init) && (!flipping_rest)) {
         if (thisX < (0.03*flipper.clientWidth)) {
             // Finish flipping page automatically
@@ -55,7 +109,6 @@ function flipper_listener(e) {
             updatePageFlip(thisX);
         }
     } 
-
 
     // Same logic for the case of flipping left page
     if ((left_flip_init) && (!flipping_rest)) {
@@ -97,7 +150,6 @@ function flipper_listener(e) {
             flipper.style.cursor ='default';
         }
 
-        // Same logic for the left page flipping.
     }
 };
 
@@ -116,10 +168,8 @@ function cancelRightPageFlip() {
     // applying the formulas with the X value in the utmost right side of the book, 
     // point where the page is grabbed for flipping. 
     updatePageFlip(flipper.clientWidth);
-    // Muevo ambas paginas a la izquierda. Y, en el caso de la front page, le vuelvo a poner el width al natural.
 }
 
-// MIX THESE TWO FUNCTIONS TOO
 function finishRightPageFlip() {
     // applying the formulas with the X value in the utmost left side of the book, 
     // point where the page is grabbed for flipping.
@@ -191,18 +241,12 @@ function updatePageFlip(thisX) {
     back_page.style.cssText +='box-shadow', cc + 'px 0 ' + cc + 'px rgba(0,0,0,0.7), 2px 0 4px rgba(0,0,0,0.5), -2px 0 4px rgba(0,0,0,0.5), -20px 0 40px rgba(0,0,0,0.2), 4px 0 10px rgba(0,0,0,0.1) inset, -2px 0 2px rgba(0,0,0,0.2) inset, ' + dd + 'px 0 ' + ff + 'px rgba(0,0,0,' + gg + ') inset';
 }
 
-
-// MIX THIS TWO INITIALIZATION FUNCTIONS IN ONE IN WHICH YOU INPUT A BOOLEAN (TRUE = RIGHT, FALSE = LEFT), 
-// OR A STRING. 
-
 function initializeNoFlippingState() {
     //All pages zIndex is 1 except for the only two pages that are visible.
     Array.prototype.slice.call(flipper.children).forEach((item, index) => {
         item.style.zIndex = '1';
         item.style.cssText += `width:${flipper.clientWidth/2}`;
     });
-
-
 
     let left_pages = document.querySelectorAll('.flipbook__page--left');
     let right_pages = document.querySelectorAll('.flipbook__page--right');
@@ -239,91 +283,6 @@ function initializeLeftPageFlippingState() {
     front_page = left_pages[left_pages.length - 2];
     back_page = left_pages[left_pages.length - 1];
 }
-
-
-
-async function populateBookMenu(page) {
-    // We set the state of global page_number to the page we are populating. 
-    page_number = page;
-
-    const res = await fetch('http://localhost:3000/api/books', {
-        method: 'GET',
-        headers: {
-            'page-number': page_number
-        }
-    });
-    body = await res.json();
-    // This will the json boydo of the answer, with an array of 6 books and the total number of books.  
-
-    // Now this needs to populate the menu.
-    // ALSO: CAREFUL TO NOT USE SAME ID FOR MORE THAN ONE ELEMENT. You made the mistake of 
-    // calling all the trailer link elements with same id, that can be dangerous and give problems to the browser too.
-    //book_list.innerHTML = ''; 
-    //saving this in global variable current_books so the info about the current books displayed in meny
-    // is available after this function has finished (particularly because the eventlistener
-    // will need it)
-
-    current_books = body.books;
-    const total_books = body['total-books'];
-
-    // Resetting the book shelf
-    upper_shelf.innerHTML = '';
-    bottom_shelf.innerHTML = '';
-    current_books.forEach((item, index) => {
-        if (index <= 2) {
-            upper_shelf.innerHTML += `<div class="book" id="shelf-book-${index + 1}"><img src="${item.imglink}" alt=""></div>`;
-        } else {
-            bottom_shelf.innerHTML += `<div class="book" id="shelf-book-${index + 1}"><img src="${item.imglink}" alt=""></div>`;
-        }
-    });
-
-    // show the arrow controls that are necessary, depending on the number of page and wether there are 
-    // more books to fetch. 
-    if (page_number !== 0 && book_page_controls.firstElementChild.classList.contains('hidden')) 
-        book_page_controls.firstElementChild.classList.remove('hidden') 
-    if (page_number == 0 && !book_page_controls.firstElementChild.classList.contains('hidden')) 
-        book_page_controls.firstElementChild.classList.add('hidden') 
-     
-    if ((total_books > ((page_number + 1)*6)) && book_page_controls.lastElementChild.classList.contains('hidden')) 
-        book_page_controls.lastElementChild.classList.remove('hidden'); 
-    if (!(total_books > ((page_number + 1)*6)) && !book_page_controls.lastElementChild.classList.contains('hidden')) 
-        book_page_controls.lastElementChild.classList.add('hidden');
-   
-    // Get all elements whose id start with "book-" and add event listeners.
-    document.querySelectorAll('[id^="shelf-book-"]').forEach((item, index) => item.addEventListener("click", async () => {
-        await renderBook(current_books[index]);
-        setTimeout(() => startFlipbook(current_books[index]), 3000);
-    })); 
-
-    //Lastly, outside of this function, event listeners will be added to each populated image so when you click on it, the 
-    // info is displayed on the left. 
-    // ¿WHERE SHOULD I PUT THE EVENT LISTENERS? BECAUSE I AM POPULATING HERE... INVESTIGATE. WHEN YOU FINISH THAT, 
-    // MOST THINGS WILL BE DONE!! I GUESS THE EVENT SHOULD BE AS A ARRAY EVENT LISTENER ON TOP OF THIS PAGE, 
-    // THEN, THIS FUNCTION SHOULD PUPULATE THEM AND SET THEM TO DISPLAY TRUE, I GUESS WHILE THEY ARE IN DISPLAY OFF THE 
-    // CLICK WILL NOT WORK. OR REMEMBER HOW TO DEACTIVATE CLICKS SSO THIS FUNCTION WILL ACTIVATE THE CLICK ONLY 
-    // AFTER POPULATING IT. ALSO, MAKE THE IMAGES SMALLER AND ADD LEFT AND RIGHT ARROW LIKE IN THE BOOK EXAMPLE. 
-    // AND THE LEFT AND RIGHT ARROW SHOULD APPEAR ONLY WHEN NECESSARY. NO LEFT ARROW FOR PAGE 0. AH... SO MANY THINGS TO DO. 
-}
-
-function startFlipbook(i) {
-    flipbook_container.style.visibility = 'visible';
-
-
-
-    // // Adding the click addEventListeners so the info of the book appears when clicking on the image 
-    // Array.prototype.slice.call(book_list.children).forEach((item, index) => item.firstElementChild.firstElementChild.addEventListener("click", () => {
-    //     document.getElementById('book-title').innerHTML = `${current_books[index].title}`;
-    //     document.getElementById('book-author').innerHTML = `by ${current_books[index].author}`;
-    //     document.getElementById('book-country-year').innerHTML = `${current_books[index].country}, ${current_books[index].year}`;
-    //     document.getElementById('book-info').innerHTML = `${current_books[index].info}`;
-    //     // Modificar esto para que solo desaparezca clicando la misma. Si clicas otra imagen, no. 
-    //     // Ya que lo único que tiene que pasar es que se cambie la información. 
-    //     book_info_container.classList.toggle('hidden');
-    // })); 
-
-}
-
-
 
 function renderBook(book) {
     const canvas_element = document.getElementById('canvas');
@@ -396,4 +355,3 @@ function renderBook(book) {
     initializeRightPageFlippingState();
 
 }
-

@@ -31,13 +31,6 @@
   width: 500px;  */
   flex: 0 0 80%;
   z-index: 10;
-
-  /* Remember!! The padding of the parent is not related to its 
-  content. When the content takes 100% of the width, the padding
-  is not included!!!! So, this flex item .text, does not take the whole
-  width of the page, because of the padding of its parent, .showcase.
-  Compruebalo si quieres descomentando lo siguiente*/
-  /*  background-color: red;  */
 }
 
 .page--main-page .content ul {
@@ -104,11 +97,9 @@
 }
 
 .page--main-page .show {
-  /*animation: overlay-transition 3s;*/
   opacity: 1 !important;
 }
 
-/* ESTO FUNCIONA ASÍ? DEFINIR LA CLASE HIDDEN SOLO CUANDO ESTA DENTRO DE MENU-PAGE */
 .page--main-page .hidden {
   opacity: 0 !important;
 }
@@ -129,8 +120,6 @@
     #ccc 50%,
     rgba(0, 0, 0, 0.8) 100%
   );
-  /* NOTA!! RECUERDO PROBAR OTRO TIPO DE TRANSICIONES PARA LAS 
-  TRANSICIONES DE LA PAGINA! */
   z-index: 9999;
 }
 
@@ -253,8 +242,6 @@
   border-bottom-right-radius: 25px;
 }
 
-/* BRUTAL ESTE LINK Y VIDEO DE SIMPLE LAYOUTS. USAR COMO REFERENCIA! 
-http://1linelayouts.glitch.me/ */
 .page--main-page .art-form-content-container {
   position: absolute;
   top: -30px;
@@ -262,7 +249,11 @@ http://1linelayouts.glitch.me/ */
   transform: translate(-50%);
   height: 103%;
   width: 85%;
-  background: linear-gradient(45deg, rgb(90, 90, 90) 0%, rgb(35, 35, 35) 100%);
+  background: linear-gradient(
+    45deg,
+    rgb(90, 90, 90) 0%,
+    rgb(35, 35, 35) 100%
+  );
   overflow: hidden;
   border-radius: 5px;
   box-shadow: rgb(0 0 0 / 30%) 10px 10px 10px 0px;
@@ -298,7 +289,10 @@ http://1linelayouts.glitch.me/ */
   cursor: pointer;
 }
 
-.page--main-page .art-form-content-container .art-form-selector li.pressed {
+.page--main-page
+  .art-form-content-container
+  .art-form-selector
+  li.pressed {
   transform: scale(0.9);
   background: linear-gradient(
     90deg,

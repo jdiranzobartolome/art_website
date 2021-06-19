@@ -1,0 +1,12 @@
+- Make videos and images appropiate for website by decreasing their size.
+- Add back-button to menu, screen-click for getting out of the flipbook mode, and directional
+  arrows in the book page. 
+- refractor whole menu.css and its elements in the html into BEM conventions. 
+- Store the book book images into local storage (for practice). 
+- solve ghost image bug. 
+- solve menu links transitional bugs (transitionCancel events will be needed).
+
+
+-- for the future
+- make flipbook code into a plugin
+- refractor whole javascript into pure functions, functional programmming and smaller modules. 

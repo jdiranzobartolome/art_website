@@ -1,9 +1,15 @@
+///////////
+// Imports
+///////////
+import { populateMusicMenu, music_page_player, ghostImage, music_page_nav_left, music_page_nav_right } from "./music-page-script.js";
+import { populateFilmMenu, film_page_nav_left, film_page_nav_right } from "./film-page-script.js";
+import { populateBookMenu  } from "./book-page-script.js";
+
 ///////////////////////////////
 //// variables for main-page //
 ///////////////////////////////
 //Be careful, this variable is in this script and in film-page script.
-var page_number = 0;
-const song_list = document.getElementById("song-list");
+var mouseover_bool = false;
 const popup_form = document.getElementById('popup-form');
 const header = document.getElementById("header");
 const password_popup = document.getElementById("password-popup");
@@ -432,7 +438,7 @@ async function uploadArtwork(index, e) {
 }
 
 // Playing one of the three thematic videos of main-page
-function ChangeMenuVideo(index, mouseover_bool) {
+export function ChangeMenuVideo(index, mouseover_bool) {
   if (mouseover_bool) {
     menu_page_links[index].parentElement.style.zIndex = "101";
     nonFocusedToggleHide(index);
