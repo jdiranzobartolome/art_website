@@ -26,6 +26,7 @@ var film_page_number = 0;
 // Event Listeners
 ///////////////////
 film_page_back_button.addEventListener("click", () => filmToMenu());
+
 Array.prototype.slice.call(film_page_controls.children).forEach((item, index) => item.addEventListener("click", () => {
     if (index === 0) {
         film_page_number -= 1;

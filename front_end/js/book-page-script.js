@@ -1,7 +1,6 @@
 ///////////
 // Imports
 ///////////
-import { transitionEndEventName, playVideo } from "./main-script.js";
 import { ChangeMenuVideo } from "./menu-page-script.js";
 
 
@@ -16,6 +15,7 @@ const book_shelf = document.getElementById('book-shelf');
 const book_page_controls = document.getElementById("book-page-controls");
 const upper_shelf = document.getElementById('upper-shelf');
 const bottom_shelf = document.getElementById('bottom-shelf');
+const book_page_back_button = document.getElementById("book-page-back-btn");
 var back_page = {};
 var front_page = {};
 var current_book_page = 1;
@@ -31,6 +31,8 @@ var left_flip_init = false;
 ///////////////////
 // Event Listeners
 ///////////////////
+book_page_back_button.addEventListener("click", () => bookToMenu());
+
 // event listeners to know whether the mouse is being held or not. 
 document.body.addEventListener('mousedown', () => mouse_held = true );
 document.body.addEventListener('mouseup', () => mouse_held = false );
@@ -42,6 +44,19 @@ flipper.addEventListener('mousemove', flipper_listener);
 /////////////
 // Functions
 ////////////
+function bookToMenu() {
+    // Forcing the same effect as if we stopped hovering over the menu "film"
+    // link so the video and the visuals of the menu are resetted. However, 
+    // I need to find out why this is needed.This function is deined in menu-page-script.js
+    ChangeMenuVideo(1, false);
+    // Moving to menu page. 
+    document.body.style.transition = "transform 3s ease";
+    document.body.style.transform = "translate(0,0)";
+    header.style.transition = "transform 3s ease"
+    header.style.transform = "translate(0,0)";
+}
+
+
 export async function populateBookMenu(page) {
     // We set the state of global page_number to the page we are populating. 
     book_page_number = page;
@@ -83,7 +98,19 @@ export async function populateBookMenu(page) {
     // Get all elements whose id start with "book-" and add event listeners.
     document.querySelectorAll('[id^="shelf-book-"]').forEach((item, index) => item.addEventListener("click", async () => {
         await renderBook(current_books[index]);
-        setTimeout(() => flipbook_container.style.visibility = 'visible', 3000);
+        setTimeout(() => {
+            flipbook_container.style.visibility = 'visible', 2000
+            
+            //Event listener for getting out of reading book mode by clicking outside of the book. 
+            document.body.addEventListener("mousedown", function _listener(e) {
+            if ((e.target !== flipbook) && (e.target !== flipper))  {
+                console.log(e.target);
+                flipbook_container.style.visibility = 'hidden';
+                document.body.removeEventListener("click", _listener);
+            }
+        }, ); 
+        });
+        
     })); 
 
 }
@@ -160,14 +187,26 @@ function flippingRest() {
     setTimeout(() => {
         flipping_rest = false;
         flipper.addEventListener('mousemove', flipper_listener);
-    }, 1000);
+    }, 1250);
 }
 
 function cancelRightPageFlip() {
-    initializeNoFlippingState()
+    //initializeNoFlippingState()
     // applying the formulas with the X value in the utmost right side of the book, 
     // point where the page is grabbed for flipping. 
-    updatePageFlip(flipper.clientWidth);
+    //updatePageFlip(flipper.clientWidth);
+
+    flippingRest();
+    let timer = setInterval(() => { 
+        thisX += 12;
+        if (thisX > 0.96*flipper.clientWidth) {
+            updatePageFlip(flipper.clientWidth);
+            initializeNoFlippingState();
+            clearInterval(timer);
+        } else {
+            updatePageFlip(thisX);
+        }
+    }, 0.15);  
 }
 
 function finishRightPageFlip() {
@@ -207,8 +246,20 @@ function finishLeftPageFlip() {
 function cancelLeftPageFlip() {
     // applying the formulas with the X value in the utmost right side of the book, 
     // point where the page is grabbed for flipping. 
-    updatePageFlip(0);
-    initializeNoFlippingState();
+    //updatePageFlip(0);
+    //initializeNoFlippingState();
+
+    flippingRest();
+    let timer = setInterval(() => {
+        thisX -= 12;
+        if (thisX < 0.04*flipper.clientWidth) {
+            updatePageFlip(0);
+            initializeNoFlippingState();
+            clearInterval(timer);
+        } else {
+            updatePageFlip(thisX);
+        }
+    }, 0.08);
 }
 
 function updatePageFlip(thisX) {
@@ -230,7 +281,7 @@ function updatePageFlip(thisX) {
                                      left:${w/2}px`;
     } else {
         back_page.style.cssText +=`width:${(w/2) + (-1/2)*thisX}px;
-                            height:${(h) + (0.2*h/w)*thisX}px;
+                            height:${(h) + (0.2*h/w)*thisX + 10}px;
                             top:${-thisX/(w/50)}px;
                             left:${thisX - 2}px;`;
         front_page.style.cssText += `width:0px;`;

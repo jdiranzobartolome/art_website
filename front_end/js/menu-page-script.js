@@ -4,6 +4,8 @@
 import { populateMusicMenu, music_page_player, ghostImage, music_page_nav_left, music_page_nav_right } from "./music-page-script.js";
 import { populateFilmMenu, film_page_nav_left, film_page_nav_right } from "./film-page-script.js";
 import { populateBookMenu  } from "./book-page-script.js";
+import { transitionEndEventName } from "./main-script.js";
+
 
 ///////////////////////////////
 //// variables for main-page //
@@ -26,21 +28,11 @@ const book_form_link_add_btn = document.getElementById("book-form-link-add-btn")
 const art_form_btn = document.getElementById("art-form-btn");
 const art_form_wrapper = document.getElementById("art-form-wrapper");
 const menu_page_art_forms = document.querySelectorAll(".page--main-page .form"); //instead of .form, the query could also be done over action tag)
+const transitionEnd = transitionEndEventName();
 
 ////////////////////////////////////
 // Event listeners for main-page ///
 ////////////////////////////////////
-//NOTA!! THERE ARE MAAAANY WAYS TO DEFINE THE FUNCTIONS OF THE EVENTLISTENER, IN THIS CASE I USED AN ARROW FUNCTION
-// WHICH ALLOWED ME TO PASS SOME PARAMETERS. ANONYMOUS FUNCTIONS ARE THE ONES TO USE WHEN
-// YOU NEED SOME PARAMETERS BECAUSE THE USE OF PARENTHESIS ON THE NAME OF THE EXISTING FUNCTION WOULD
-// WORK AS A CALL, SO YOU WOULD CALL THE FUNCTION DIRECTLY.  WHEN THERE IS NO PARAMETER YOU CAN JUST DIRECTLY PASS THE FUNCTION
-// AND ALSO THERE IS HARDER THIGNS TO DO WHEN YOU WANT THE EVENT TO HAVE THE POSSIBILITY TO BE REMOVED
-//SINCE FOR THAT YOU NEED TO DEFINE A FUNCTION WITH A NAME.... LEER SOBRE ESTAS COSAS
-// Al final lo cambie a como creo que tenia que hacer. EN LUGAR DE USAR EL INDEX DE ESE FOR EACH,
-// USE EL ARGUMENTO DE "event" QUE ENVIA EL EVENTLISTENER Y RECALCULÉ EL INDEX Y LO QUE NECESITABA
-// CON LA PROPIEDAD DE event.target.
-// DEJO OTROS CON EL INDEX, UN CON EVENT Y OTRO SIN EVENT, SÓLO PARA TENER VARIEDAD DE FORMAS DE HACER LO MISMO. PERO
-// CREO QUE EL MÁS CORRECTO ES EL DE LOS QUE NO USAN EL INDEX NI PARAMETROS EXTRA PARA LA FUNCION CALLBACK.
 menu_page_links.forEach((item) =>
   item.addEventListener("mouseout", ChangeMenuVideo_listener)
 );
@@ -65,23 +57,6 @@ art_form_selectors.forEach((item, index) =>
       if (index === i) {
         if (!item.classList.contains("pressed")) {
           item.classList.add("pressed");
-          // This is how I originally changed the ids of the submit button. Now I do it with innetHTML.
-          // // Beside creating the effect of the button being pressed, we also change the attribute of the password_pupup text and submit button
-          // // external to the HTML forms. Depending on which form button is clicked, that submit button will be linked to one form or other.
-          // let form_ids = ["film-form", "book-form", "music-form"];
-          // Array.prototype.slice
-          //   .call(password_popup.querySelectorAll("*"))
-          //   .forEach((child) => {
-          //     let form_element =
-          //       child.tagName === "LABEL" ||
-          //       child.tagName === "INPUT" ||
-          //       child.tagName === "BUTTON"
-          //         ? true
-          //         : false;
-          //     if (form_element) {
-          //       child.setAttribute("form", form_ids[i]);
-          //     }
-          //   });
         }
       } else {
         item.classList.remove("pressed");
@@ -129,8 +104,6 @@ menu_page_art_forms.forEach((item, index) => {
 //// functions for main-page //
 ///////////////////////////////
 
-// adding a new text input in html
-
 // toggle art form
 function toggleArtForm() {
   //Array.prototype can also we written only as [], so it could be [].slice.call...etc
@@ -144,7 +117,7 @@ function toggleArtForm() {
 // to it sometimes.
 // for info, read here: https://medium.com/@DavideRama/removeeventlistener-and-anonymous-functions-ab9dbabd3e7b
 function ChangeMenuVideo_listener(e) {
-  // The DOM query selector do not create arrays, but nodeLists. They can be iterated with forEach but there
+  // The DOM query selector does not create arrays, but nodeLists. They can be iterated with forEach but there
   // are many array functions they do not have. Some of them can be solved by transforming to an Array like in the following method.
   var index = Array.prototype.indexOf.call(menu_page_links, e.target);
   mouseover_bool = e.type === "mouseover" ? true : false;
@@ -168,10 +141,6 @@ function changeMenuPage(index) {
     // Populate the film menu with the initial 6 films from menu-page 1. This function is defined in film-page-script.js
     populateFilmMenu(0);
 
-    // PASARLO A USAR TRANISITION EVENT LISTENER PARA QUE SE AÑADA LA CALSE SHOW CUANDO
-    //HAYA ACABADO LA TRANSICION DEL BODY.
-    // Y CAMBIAR AQUI DESDE JAVASCRIPT EL VALOR DE TRANSICION DEL BODY PORQUE EN CADA TRANSICION CAMBIA!!!
-    // PARA HACIA FILM-PAGE SON 3S CREO, PARA HACIA MUSIC-PAGE SON UNOS 7S
     setTimeout(() => {
       film_page_nav_left.classList.add("show");
       film_page_nav_right.classList.add("show");
@@ -235,7 +204,6 @@ function changeMenuPage(index) {
       ghostImage(0, true);
     }, 2500);
 
-    // PENSAR SI AQUI BIENE MEJOR UN TIMEOUT OR UN EVENT DE TRANSICION
     // Tiempo hasta que caiga el nav de music-page desde puslar el boton.
     //Esto hacerlo con transition event listener para cuando acabe la transcion del movimineto del body.
     setTimeout(() => {
@@ -298,7 +266,7 @@ async function uploadArtwork(index, e) {
       small.innerText = data.errors[0].msg;
       password_popup.classList.add("error");
       small.classList.toggle("visible");
-      var transitionEnd = transitionEndEventName();
+  
       small.addEventListener(transitionEnd, function _listener() {
         small.removeEventListener(transitionEnd, _listener);
         small.classList.toggle("visible");
@@ -309,7 +277,7 @@ async function uploadArtwork(index, e) {
       small.innerText = "artwork uploaded to the database";
       password_popup.classList.add("success");
       small.classList.toggle("visible");
-      var transitionEnd = transitionEndEventName();
+
       small.addEventListener(transitionEnd, function _listener() {
       small.removeEventListener(transitionEnd, _listener);
       small.classList.toggle("visible");
@@ -361,7 +329,7 @@ async function uploadArtwork(index, e) {
         small.innerText = data.errors[0].msg;
         password_popup.classList.add('error');
         small.classList.toggle('visible');
-        var transitionEnd = transitionEndEventName();
+
         small.addEventListener(transitionEnd, function _listener() {
             small.removeEventListener(transitionEnd, _listener);
             small.classList.toggle('visible');
@@ -372,7 +340,7 @@ async function uploadArtwork(index, e) {
         small.innerText = "artwork uploaded to the database";
         password_popup.classList.add('success');
         small.classList.toggle('visible');
-        var transitionEnd = transitionEndEventName();
+
         small.addEventListener(transitionEnd, function _listener() {
             small.removeEventListener(transitionEnd, _listener);
             small.classList.toggle('visible');
@@ -417,7 +385,7 @@ async function uploadArtwork(index, e) {
         small.innerText = data.errors[0].msg;
         password_popup.classList.add("error");
         small.classList.toggle("visible");
-        var transitionEnd = transitionEndEventName();
+
         small.addEventListener(transitionEnd, function _listener() {
           small.removeEventListener(transitionEnd, _listener);
           small.classList.toggle("visible");
@@ -428,7 +396,7 @@ async function uploadArtwork(index, e) {
         small.innerText = "artwork uploaded to the database";
         password_popup.classList.add("success");
         small.classList.toggle("visible");
-        var transitionEnd = transitionEndEventName();
+
         small.addEventListener(transitionEnd, function _listener() {
           small.removeEventListener(transitionEnd, _listener);
           small.classList.toggle("visible");
@@ -445,9 +413,9 @@ export function ChangeMenuVideo(index, mouseover_bool) {
   }
 
   menu_page_overlay.classList.toggle("show");
-  var transitionEnd = transitionEndEventName();
-  menu_page_overlay.addEventListener(transitionEnd, function _listener() {
-    menu_page_overlay.removeEventListener(transitionEnd, _listener);
+
+
+  menu_page_overlay.addEventListener(transitionEnd, () => {
     menu_page_video.setAttribute(
       "src",
       `./video/menu-page/${
@@ -458,13 +426,13 @@ export function ChangeMenuVideo(index, mouseover_bool) {
       menu_page_overlay.classList.toggle("show");
       if (!mouseover_bool) {
         nonFocusedToggleHide(index);
-        menu_page_overlay.addEventListener(transitionEnd, function _listener() {
-          menu_page_overlay.removeEventListener(transitionEnd, _listener);
+
+        menu_page_overlay.addEventListener(transitionEnd, () => {
           menu_page_links[index].parentElement.style.zIndex = "10";
-        });
+        }, { once: true });
       }
     }, 500);
-  });
+  }, { once: true });
 }
 
 // function for hiding the items not focused on
@@ -474,35 +442,6 @@ function nonFocusedToggleHide(index) {
       menu_page_links[i].classList.toggle("hidden");
     }
   });
-}
-//VITAL!!!!! INTENTAR NO USAR LO DEL ZINDEX Y MIRAR
-//SI ES POSIBLE HACER QUE DESAPAREZCAN LOS ELEMENTOS CON UNA TRANSICION
-//DE OPACIDAD CUANDO PASA A HIDDEN...CREO QUE SERA MUUUUCHO MEJOR.
-
-// TO SOLVE!!!!!!
-// MAKE WORDS DISSAPEAR WITH OPACITY
-// ALSO, CHANGE TIMEOUTS TO TRANSITION EVENTS AND TRY TO SOLVE THE WEIRD THINGS THAT HAPPEN WHEN YOU MOVE THE MOSUE FAST
-
-//https://stackoverflow.com/questions/5023514/how-do-i-normalize-css3-transition-functions-across-browsers/9090128#9090128
-//https://medium.com/better-programming/detecting-the-end-of-css-transition-events-in-javascript-8653ae230dc7
-// WAY OF PERFORMING TRANSITION END EVENTS CORRECTLY!!!!
-function transitionEndEventName() {
-  var i,
-    undefined,
-    el = document.createElement("div"),
-    transitions = {
-      transition: "transitionend",
-      OTransition: "otransitionend", // oTransitionEnd in very old Opera
-      MozTransition: "transitionend",
-      WebkitTransition: "webkitTransitionEnd",
-    };
-
-  for (i in transitions) {
-    if (transitions.hasOwnProperty(i) && el.style[i] !== undefined) {
-      return transitions[i];
-    }
-  }
-
 }
 
 

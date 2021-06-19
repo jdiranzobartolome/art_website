@@ -11,6 +11,13 @@
   -ms-user-select: none;
 }
 
+.circ-btn--book-page-back {
+  position: absolute;
+  z-index: 10000;
+  left: 25px;
+  bottom: 20px;
+}
+
 .flipbook-container {
   position: absolute;
   top: 50%;
@@ -67,6 +74,7 @@
     -25px 0 30px rgba(0, 0, 0, 0.1) inset,
     -1px 0 4px rgba(0, 0, 0, 0.3), 3px 0 5px rgba(0, 0, 0, 0.5),
     45px 0 45px rgba(255, 255, 255, 0.3) inset;
+  pointer-events: none;
 }
 
 .flipbook__page .content {
