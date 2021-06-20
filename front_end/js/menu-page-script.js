@@ -190,19 +190,19 @@ function changeMenuPage(index) {
     populateMusicMenu(0);
 
     /* Next variables and function defined in music-page-script.js */
-    music_page_player.volume = 0.5;
-    music_page_player.play();
+    // music_page_player.volume = 0.5;
+    // music_page_player.play();
 
-    document.body.style.transition = "transform 7s ease";
+    document.body.style.transition = "transform 3s ease";
     document.body.style.transform = "translate(-100vw,0)";
     header.style.transition = "transform 3s ease";
     header.style.transform = "translate(100vw,0)";
 
     // interval between pressing the music button and for the ghost image to start appearing.
     // with the second argument as true, the ghist image will dissapear after appearing.
-    setTimeout(() => {
-      ghostImage(0, true);
-    }, 2500);
+    // setTimeout(() => {
+    //   ghostImage(0, true);
+    // }, 2500);
 
     // Tiempo hasta que caiga el nav de music-page desde puslar el boton.
     //Esto hacerlo con transition event listener para cuando acabe la transcion del movimineto del body.
@@ -218,7 +218,7 @@ function changeMenuPage(index) {
 
       document.body.style.transition = "transform 0.01s ease";
       header.style.transition = "transform 0.1s ease";
-    }, 7000);
+    }, 2000);
   }
 }
 
@@ -443,9 +443,3 @@ function nonFocusedToggleHide(index) {
     }
   });
 }
-
-
-
-
-
-

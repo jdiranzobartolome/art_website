@@ -54,6 +54,7 @@ function bookToMenu() {
     document.body.style.transform = "translate(0,0)";
     header.style.transition = "transform 3s ease"
     header.style.transform = "translate(0,0)";
+
 }
 
 

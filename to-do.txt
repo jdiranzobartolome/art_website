@@ -1,3 +1,11 @@
+- 1) ARREGLAR LO QUE FALTA DEL BOOK-PAGE, SUBIR 7-8 LIBROS Y  CANCIONES MAS A LA DB Y YA
+    SUBIR LA WEB ONLINE. 
+
+2) AVERIGUAR COMO SE PONEN LAS VARIABLES DEL SERVER, COMO EL SECRET TOKEN O LA URL DEL 
+   MONGOODB DONDE SE VE TU PASSWORD PARA QUE EN PRODUCCION NO SE PUEDA VER EN EL SERVER. (ENVIRONMENTAL
+    VARIABLES?). TMBIEN AÑADIR UN ESE ARCHIVO A .GITIGNORE.
+
+-
 - Make videos and images appropiate for website by decreasing their size.
 - Add back-button to menu, screen-click for getting out of the flipbook mode, and directional
   arrows in the book page. 

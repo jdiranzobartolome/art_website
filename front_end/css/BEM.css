@@ -247,6 +247,10 @@ smart video menu itself (an element forming part of it)*/
   transition: opacity 1s ease;
 }
 
+.smart-vid-menu__link.hidden {
+  visibility: hidden;
+}
+
 /* END OF THE SMART VIDEO MENU BLOCK AND ITS ELEMENTS DEFINITION */
 /* ---------------------------------------- */
 

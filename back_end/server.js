@@ -10,6 +10,8 @@ connectDB();
 // This middleware allows express to parse json data
 app.use(express.json({extended: false}));
 
+
+// CAMBIAR ESTO Y HACER UN PROXY!
 // This Middleware set CORS so cross-origin shared asswets are allowed (needed for websites to access or send assets to websites that are not
 // in the same origin. So with this, websites will be able to access the database of this server. It could also be done 
 // we a dependency: 
@@ -26,7 +28,16 @@ app.use((req, res, next) => {
     next();
 });
 
-app.get('/', (req, res) => res.send('API running'));
+// Serve static assets in production
+if(process.env.NODE_ENV === 'production') {
+    // Set static folder 
+    app.use(express.static('../front_end'));
+
+    // Any route that are not the ones above, will redirecto
+    // to thei index.html
+    app.get('*', (req, res) =>
+     res.sendFile(path.resolve(__dirname, '../', 'front_end', 'main.html')));
+}
 
 // Define Routes
 // @todo 
