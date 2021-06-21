@@ -347,7 +347,9 @@ async function uploadArtwork(index, e) {
           });
       }
   } else if (index===2) {
-    let title = document.getElementById("song-form-title").value;
+
+    console.log ('hola')
+      let title = document.getElementById("song-form-title").value;
       let artist = document.getElementById("song-form-artist").value;
       let country = document.getElementById("song-form-country").value;
       let year = document.getElementById("song-form-year").value;
@@ -355,6 +357,7 @@ async function uploadArtwork(index, e) {
       let music_video = document.getElementById("song-form-video").value;
       let imglink = document.getElementById("song-form-img-link").value;
       let password = document.getElementById("password").value;
+  console.log(title);
 
       let res = await fetch("http://localhost:3000/api/songs", {
         method: "POST",

@@ -49,10 +49,11 @@ router.post('/', [auth, [
     try {
         // See if the film exists, for that we use the title "processedtitle" created only for not allowing the user to 
         // upload movies to the database with same title because of different case or spaces. 
+        console.log(processedtitle);
         processedtitle = (req.body.title).replace(/\s+/g, '').toLowerCase();
-        let film = await Song.findOne({ processedtitle });
-        if(film) {
-            return res.status(400).json({errors: [{ msg: 'Movie with same title already in the database' }]});
+        let song = await Song.findOne({ processedtitle });
+        if(song) {
+            return res.status(400).json({errors: [{ msg: 'Song with same title already in the database' }]});
         }
         // Upload
         const uploaded_song = await newSong.save();
@@ -64,7 +65,7 @@ router.post('/', [auth, [
         // not differentiate between capital and non capital letters on the title, which using only the error of 
         // mongoose because of duplicate unique keys, I cannot. But, I still leave it just in case. 
         if ( err && err.code === 11000 ) {
-            return res.status(400).json({errors: [{ msg: 'Movie with same title already in the database' }]});
+            return res.status(400).json({errors: [{ msg: 'Song with same title already in the database' }]});
         }
         res.status(500).send('Server Error');
     }
@@ -174,7 +175,7 @@ router.get('/:musician_id', async (req, res) => {
         const musician = await Musician.findById(req.params.musician_id);
         
         if (!musician) {
-            return res.status(404).json({ msg: 'Muician not found' });
+            return res.status(404).json({ msg: 'Musician not found' });
         }
 
         res.json(musician);

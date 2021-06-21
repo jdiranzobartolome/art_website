@@ -86,7 +86,8 @@
   transition-property: opacity;
   transition-duration: 1s;
   transition-delay: 0.5s;
-  z-index: 999;
+  visibility: hidden;
+  z-index: 0;
 }
 
 .music-page-ghost-img-container.hide {
