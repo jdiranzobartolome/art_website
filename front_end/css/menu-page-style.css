@@ -446,9 +446,7 @@ where he/she is focusing and writing on.  */
   width: 100%;
 }
 
-/* Media Queries for the phone!! For really small! The rest of media queries (the ones that are not common, and where only used here and 
-there for small corrections when the screen became a little "laptop smaller") are within the code. Here I write the
-huge media queries that make this work for phones (under 500px width) */
+/* Media Queries for the phone!!  */
 
 @media (max-width: 750px) {
   .page--main-page .content ul a {

@@ -1,9 +1,3 @@
-/* @ TO-DO */
-/* CREATE ALSO A MENU-PAGE-CSS AND THE GENERAL GLOBAL CSS LEAVE IT IN A GLOBAL.CSS, 
-OR SOMETHING LIKE THAT. SO EVERYTHING IS SEPARATED NICELY. DO NOT HAVE THE MAIN-CSS WITH GENERAL CSS AND MENU-PAGE CSS.
-FILM, BOOK, AND MUSIC CSS FILES ESTAN COMPLETOS. mMAIN TAMBIEN. BASICAMENTE TENG QUE PASAR A BEM TODO
- LO DEL MENU, EN CONCRETO LOS TRES LINKS, Y TODO EL FORM (SON MUCHAS COSAS)  */
-
 /* block class for the page document and content container */
 .page {
   position: absolute;
@@ -396,31 +390,10 @@ and element inside an element?  */
   visibility: hidden !important;
 }
 
-/* END OF ITEM LIST BLOCK  */
-/* ---------------------------- */
-
-/* MEDIA QUERIES */
-
-/* This is for media queries. For now leave them here, at the bottom. 
-Until you refractor the code with BEM. Then let's think */
-/* @media (min-width: 1084px) {
-  .smart-vid-menu__link {
-    font-size: 65px;
-  }
-} */
-
 /* General transfomrational classes */
 .hidden {
   opacity: 0;
 }
-
-/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
-/* MAIN PAGE PARTICULARS */
-/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
-
-/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
-/* FILM PAGE PARTICULARS */
-/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
 
 /*  START OF ITEM-INFO BLOCK */
 

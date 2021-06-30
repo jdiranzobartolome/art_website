@@ -3,11 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- VITAL VITAL VITAL VITAL VITAL!!!!! 
-    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    EN EL META CON NOMBRE VIEWPORT, SE PUEDEN CAMBIAR VARIAS PROPIEDADES (O AÑADIR), HAY UNA QUE ES MINIMUM-SCALE, QUE 
-    ES MUY IMPORTANTE AÑADIRAL Y PONERLA A 1 PARA QUE EN LOS MOVILES NO SE PUEDA HACER UN UNZOOM DESDE EL PRINCIPIO Y QUE POR LO TANTO
-    SE PUEDE VER LA PARTE DE PAGINA RESDERIZADA FUERA DEL VIEWPORT!!!!! VITAL!-->
+    <!-- In Meta options, the minimum-scale property set to 1 makes mobile users not be able to zoom out (important in this case where 
+        we have a large, several pages mixed, website) -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0 minimum-scale=1.0">
     <link rel="stylesheet" href="./css/main-style.css">
     <link rel="stylesheet" href="./css/menu-page-style.css">
@@ -30,7 +27,6 @@
         </div>
     </header>
     <!-- @ TO-DO: THE FORMS, THE PASSWORD POPUP, AND A FEWO THER THINGS, NEEED TO BE REFRACTORED TO BEM YET!!!! -->
-
     <!-- Password popup when trying to submit a form. It needs the id of the form, 
         so with JS that form attribute need to be change to the corresponding ID (film, book or music)-->
     <div class="password-popup" id="password-popup">
